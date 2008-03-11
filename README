@@ -1,0 +1,73 @@
+= Synthesis
+
+== Philosophy
+
+Currently we believe that developers are writing unnecessary functional tests to cover uncertainty about the validity of simulated interactions in their unit tests.  In other words, we cannot be certain that all our unit tests 'join up'.  If it were possible to correlate the simulated interactions in our unit tests, then we should be able to do away with the need to write large numbers of slow and annoying functional tests (apart from those which interact with the boundaries of the SUT).
+
+== Installation
+
+ sudo gem i synthesis
+
+== Download
+
+Synthesis RubyForge page ( http://rubyforge.org/projects/synthesis )
+
+== Dependencies
+
+Synthesis's core doesn't have any dependencies. 
+
+When used with the Mocha adapter, it will depend on the Mocha[http://mocha.rubyforge.org] library.
+
+When used with the RSpec adapter, it will depend on the RSpec[http://rspec.info/] library.
+
+When used with the Expectations adapter, it will depend on the Expectations[http://expectations.rubyforge.org] library.
+
+== Usage
+
+Synthesis can be used through its Rake task. It currently has three supported adapters: Mocha (with Test::Unit), RSpec and Expectations. If +adapter+ is not explicitly specified, the Mocha adapter will be used by default. 
+
+By default, Synthesis outputs to +STDOUT+, but output can be redirected to alternative IO streams.
+
+Synthesis can be setup to ignore certain classes or modules when collecting expectations for verification.
+
+If +pattern+ is not specified, it will default to <tt>test/**/*.rb</tt>
+
+== Usage examples
+
+To use with Test::Unit and Mocha, ignoring Array and Hash:
+
+  require "synthesis/task"
+	
+  Synthesis::Task.new do |t|
+    t.pattern = 'test/unit/**/*_test.rb'
+    t.ignore Array, Hash
+  end
+
+To use with RSpec, running all specs in the <tt>spec</tt> directory:
+
+  require "synthesis/task"
+
+  Synthesis::Task.new do |t|
+    t.adapter = :rspec
+    t.pattern = 'spec/**/*_spec.rb'
+  end
+
+To use with Expectations, redirecting output to a file
+
+  require "synthesis/task"
+	
+  Synthesis::Task.new do |t|
+    t.adapter = :expectations
+    t.out = File.new "synthesis.test.txt", "a"
+  end
+
+== Known Issues
+
+Reporting the location (filename and line number) of tested/untested expectations doesn't work as intended with the Expectations adapter.
+
+== Related reading
+
+* Synthesized Testing: A Primer ( http://nutrun.com/weblog/synthesized-testing-a-primer )
+* Using Synthesis With Test::Unit and Mocha ( http://nutrun.com/weblog/using-synthesis-with-testunit-and-mocha )
+* Using Synthesis With Expectations ( http://nutrun.com/weblog/using-synthesis-with-expectations )
+* Synthesis validates simulated method calls taking method signature arguments into account ( http://nutrun.com/weblog/synthesis-002 )
