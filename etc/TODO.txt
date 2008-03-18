@@ -1,2 +1,0 @@
-TODO: What do we do about dynamically defined methods (i.e. half of Rails)?
-FIXME: Reporting currently sucks.
