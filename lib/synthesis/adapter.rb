@@ -38,7 +38,7 @@ module Synthesis
 
           def with(*expected_parameters, &matching_block)
             synthesis_expectation.args = expected_parameters if synthesis_expectation
-            original_with *expected_parameters, &matching_block
+            original_with(*expected_parameters, &matching_block)
           end
         end
       end

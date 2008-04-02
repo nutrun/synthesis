@@ -8,7 +8,7 @@ module Synthesis
   class MochaAdapter < Adapter
 
     ignore_instances_of Class::AnyInstance
-    expectation_class Mocha::Expectation
+    # expectation_class Mocha::Expectation
     intercept :method => :expects, :on => Object
     
     def run
@@ -16,4 +16,23 @@ module Synthesis
       fail_unless { Test::Unit::AutoRunner.run }
     end
   end  
+end
+
+class Mocha::Expectation
+  attr_accessor :synthesis_expectation
+
+  alias original_with with
+
+  def with(*expected_parameters, &matching_block)
+    synthesis_expectation.args = expected_parameters if synthesis_expectation
+    original_with(*expected_parameters, &matching_block)
+  end
+  
+  alias original_returns returns
+  
+  def returns(*values)
+    mocha_expectation = original_returns(*values)
+    synthesis_expectation.return_values = values
+    mocha_expectation
+  end
 end
