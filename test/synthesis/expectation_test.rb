@@ -74,17 +74,11 @@ module Synthesis
     end
     
     def test_make_sure_equality_works_with_uniq
-      arr = [
-        Expectation.new(String, :new, []), 
-        Expectation.new(String, :new, [])
+      expectations = [
+        Expectation.new(String, :new, [], [:arg1, :arg2], :return_value), 
+        Expectation.new(String, :new, [], [:arg1, :arg2], :return_value)
       ]
-      assert_equal(1, arr.uniq.size)
-    end
-
-    def silent(object)
-      object.silence!
-      yield
-      object.speak!
+      assert_equal(1, expectations.uniq.size)
     end
   end
 end
