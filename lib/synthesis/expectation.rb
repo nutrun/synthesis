@@ -1,7 +1,7 @@
 module Synthesis
   module Expectation
-    def self.new(receiver, method, track, args = [])
-      receiver.expectation method, track, args
+    def self.new(receiver, method, track, args = [], return_value = nil)
+      receiver.expectation(method, track, args, return_value)
     end
   
     class Expectation
@@ -9,8 +9,9 @@ module Synthesis
       attr_reader :receiver, :method
       attr_accessor :args, :return_value
       
-      def initialize(receiver, method, track, args)
+      def initialize(receiver, method, track, args, return_value)
         @receiver, @method, @track, @args = receiver, method, track, args
+        @return_value = return_value
       end
       
       def record_invocations
@@ -45,7 +46,8 @@ module Synthesis
       def eql?(other)
         return false unless other.is_a?(Synthesis::Expectation::Singleton)
         @receiver.name == other.receiver.name && 
-        @method == other.method && 
+        @method == other.method &&
+        return_value.class == other.return_value.class &&
         args_match?(other)
       end
       
@@ -66,7 +68,8 @@ module Synthesis
       def eql?(other)
         return false unless other.is_a?(Synthesis::Expectation::Instance)
         meta_receiver.name == other.meta_receiver.name && 
-        @method == other.method && 
+        @method == other.method &&
+        return_value.class == other.return_value.class &&
         args_match?(other)
       end
       
