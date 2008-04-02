@@ -7,7 +7,7 @@ module Synthesis
     class Expectation
       include Logging
       attr_reader :receiver, :method
-      attr_accessor :args
+      attr_accessor :args, :return_value
       
       def initialize(receiver, method, track, args)
         @receiver, @method, @track, @args = receiver, method, track, args
