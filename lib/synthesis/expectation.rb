@@ -56,7 +56,7 @@ module Synthesis
       end
       
       def to_s
-        "#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
+        "(#{return_value.class})#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
       end
     end
     
@@ -78,7 +78,7 @@ module Synthesis
       end
       
       def to_s
-        "#{meta_receiver.name}.new.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
+        "(#{return_value.class})#{meta_receiver.name}.new.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
       end
     end
     
