@@ -1,17 +1,17 @@
 module Synthesis
   module Recordable
     def recordable_method(meth)
-      if method_defined? meth
-        defined_recordable_method meth
+      if method_defined?(meth)
+        defined_recordable_method(meth)
       else
-        magic_recordable_method meth
+        magic_recordable_method(meth)
       end
     end
     
     protected
     
     def defined_recordable_method(meth)
-      unless method_defined? "__recordable__#{meth}".intern
+      unless method_defined?("__recordable__#{meth}".intern)
         alias_method "__recordable__#{meth}".intern, meth
         class_eval @@recordable_method_def[meth]
       end

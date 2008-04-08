@@ -15,8 +15,8 @@ module Synthesis
       end
       
       def record_invocations
-        meta_receiver.extend Recordable
-        meta_receiver.recordable_method @method
+        meta_receiver.extend(Recordable)
+        meta_receiver.recordable_method(@method)
       end
       
       def ==(other)
