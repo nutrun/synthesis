@@ -43,7 +43,7 @@ class Mocha::Expectation
   
   def returns(*values)
     mocha_expectation = original_returns(*values)
-    synthesis_expectation.add_return_values(*values)
+    synthesis_expectation.add_return_values(*values) if synthesis_expectation
     mocha_expectation
   end
 end

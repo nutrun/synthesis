@@ -44,7 +44,7 @@ module Spec::Mocks
 
     def and_return(*values)
       spec_expectation = original_and_return(*values)
-      synthesis_expectation.add_return_values(*values)
+      synthesis_expectation.add_return_values(*values) if synthesis_expectation
       spec_expectation
     end
   end
