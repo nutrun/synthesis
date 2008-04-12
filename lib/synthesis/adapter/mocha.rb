@@ -6,10 +6,7 @@ require File.dirname(__FILE__) + "/../../synthesis"
 
 module Synthesis
   class MochaAdapter < Adapter
-
     ignore_instances_of Class::AnyInstance
-    # expectation_class Mocha::Expectation
-    intercept :method => :expects, :on => Object
     
     def run
       Test::Unit.run = true # Yes means no...
@@ -25,8 +22,8 @@ module Synthesis
       end
       
       Object.class_eval do
-        alias expects original_meth
-        undef original_meth
+        alias expects original_expects
+        undef original_expects
       end
     end
   end  
@@ -48,5 +45,16 @@ class Mocha::Expectation
     mocha_expectation = original_returns(*values)
     synthesis_expectation.add_return_values(*values)
     mocha_expectation
+  end
+end
+
+class Object
+  alias original_expects expects
+  
+  def expects(meth)
+    s_expectation = Synthesis::ExpectationRecord.add_expectation(self, meth, caller[0])
+    m_expectation = original_expects(meth)
+    m_expectation.synthesis_expectation = s_expectation
+    m_expectation
   end
 end
