@@ -32,8 +32,7 @@ class Mocha::Expectation
   
   def returns(*values)
     mocha_expectation = original_returns(*values)
-    #FIXME: Simple for now, fix later...
-    synthesis_expectation.return_value = values.last
+    synthesis_expectation.add_return_values(*values)
     mocha_expectation
   end
 end

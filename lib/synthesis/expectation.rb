@@ -1,22 +1,27 @@
 module Synthesis
   module Expectation
-    def self.new(receiver, method, track, args = [], return_value = nil)
-      receiver.expectation(method, track, args, return_value)
+    #FIXME: make return values a Set
+    def self.new(receiver, method, track, args = [], return_values = [])
+      receiver.expectation(method, track, args, return_values)
     end
   
     class Expectation
       include Logging
       attr_reader :receiver, :method
-      attr_accessor :args, :return_value
+      attr_accessor :args
       
-      def initialize(receiver, method, track, args, return_value)
+      def initialize(receiver, method, track, args, return_values)
         @receiver, @method, @track, @args = receiver, method, track, args
-        @return_value = return_value
+        @return_values = return_values
       end
       
       def record_invocations
         meta_receiver.extend(Recordable)
         meta_receiver.recordable_method(@method)
+      end
+      
+      def eql?(other)
+        ExpectationMatcher.new(self, other).match?
       end
       
       def ==(other)
@@ -31,10 +36,16 @@ module Synthesis
         @invoked = true
       end
       
-      protected
+      def arg_types
+        args.map { |arg| arg.class }
+      end
       
-      def args_match?(other)
-        self.args.map { |arg| arg.class } == other.args.map { |arg| arg.class }
+      def return_value_types
+        @return_values.map { |val| val.class }
+      end
+      
+      def add_return_values(*vals)
+        @return_values += vals
       end
     end
   
@@ -43,20 +54,16 @@ module Synthesis
         @receiver.__metaclass__
       end
       
-      def eql?(other)
-        return false unless other.is_a?(Synthesis::Expectation::Singleton)
-        @receiver.name == other.receiver.name && 
-        @method == other.method &&
-        return_value.class == other.return_value.class &&
-        args_match?(other)
-      end
-      
       def hash
         (@receiver.name.hash * 23) + @method.hash
       end
       
+      def receiver_class
+        @receiver
+      end
+      
       def to_s
-        "(#{return_value.class})#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
+        "(#{return_values.class})#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
       end
     end
     
@@ -65,20 +72,16 @@ module Synthesis
         @receiver.class
       end
       
-      def eql?(other)
-        return false unless other.is_a?(Synthesis::Expectation::Instance)
-        meta_receiver.name == other.meta_receiver.name && 
-        @method == other.method &&
-        return_value.class == other.return_value.class &&
-        args_match?(other)
-      end
-      
       def hash
         (meta_receiver.name.hash * 23) + @method.hash
       end
       
+      def receiver_class
+        meta_receiver
+      end
+      
       def to_s
-        "(#{return_value.class})#{meta_receiver.name}.new.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
+        "(#{return_values.class})#{meta_receiver.name}.new.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
       end
     end
     

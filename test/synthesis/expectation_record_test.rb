@@ -22,9 +22,9 @@ module Synthesis
     end
 
     def test_finds_expectation
-      ExpectationRecord.add_expectation Object.new, :foo, :track
-      expected = ExpectationRecord.expectations.to_a[0]
-      matcher = Expectation.new Object.new, :foo, :track
+      expected = ExpectationRecord.add_expectation(Object.new, :foo, :track)
+      expected.add_return_values(20)
+      matcher = Expectation.new(Object.new, :foo, :track, [], [20])
       actual = ExpectationRecord[matcher]
       assert_equal(expected, actual)
     end
@@ -37,15 +37,16 @@ module Synthesis
     end
 
     def test_does_not_add_expectation_for_ignored_class
-      ExpectationRecord.ignore Hash
-      ExpectationRecord.add_expectation Hash, :foo, :track
+      ExpectationRecord.ignore(Hash)
+      ExpectationRecord.add_expectation(Hash, :foo, :track)
       assert ExpectationRecord.expectations.empty?
     end
     
     def test_returns_added_expectation_on_add
-      expected = Expectation.new Hash, :foo, :track
-      actual = ExpectationRecord.add_expectation Hash, :foo, :track
-      assert_equal expected, actual
+      expected = Expectation.new(Hash, :foo, :track, [], [:return_val])
+      actual = ExpectationRecord.add_expectation(Hash, :foo, :track)
+      actual.add_return_values(:return_val)
+      assert_equal(expected, actual)
     end
   end
 end
