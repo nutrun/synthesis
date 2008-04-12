@@ -14,7 +14,7 @@ module Synthesis
       foo.extend Recordable
       foo.recordable_method(:b)
       bar = foo.new
-      MethodInvocationWatcher.expects(:invoked).with(bar, :b, [])
+      MethodInvocationWatcher.expects(:invoked).with(bar, :b, [], [nil])
       bar.b
     end
     
@@ -59,7 +59,7 @@ module Synthesis
       foo.extend Recordable
       foo.recordable_method(:b)
       bar = foo.new
-      MethodInvocationWatcher.expects(:invoked).with(bar, :b, [])
+      MethodInvocationWatcher.expects(:invoked).with(bar, :b, [], [:magic!])
       bar.b
     end
   end

@@ -15,6 +15,20 @@ module Synthesis
       Test::Unit.run = true # Yes means no...
       fail_unless { Test::Unit::AutoRunner.run }
     end
+    
+    def stop_collecting_expectations
+      Mocha::Expectation.class_eval do
+        alias with original_with
+        alias returns original_returns
+        undef original_with
+        undef original_returns
+      end
+      
+      Object.class_eval do
+        alias expects original_meth
+        undef original_meth
+      end
+    end
   end  
 end
 

@@ -30,48 +30,6 @@ module Synthesis
       expectation.record_invocations
       assert_respond_to(receiver, :__recordable__foo)
     end
-
-    def test_equality
-      exp1 = Expectation.new(Object.new, :foo, :track, [], [:return])
-      exp2 = Expectation.new(Object.new, :foo, :track, [], [:return])
-      assert_equal(exp1, exp2)
-    end
-
-    def test_non_equality
-      exp1 = Expectation.new(Hash.new, :foo, :track)
-      exp2 = Expectation.new(Array.new, :foo, :track)
-      assert_not_equal(exp1, exp2)
-    end
-    
-    def test_equality_based_on_same_type_args
-      exp1 = Expectation.new(Object.new, :foo, :track, [1, 2], [:return])
-      exp2 = Expectation.new(Object.new, :foo, :track, [1, 2], [:return])
-      assert_equal(exp1, exp2)
-    end
-    
-    def test_non_equality_based_on_different_type_args
-      exp1 = Expectation.new(Object.new, :foo, :track, [1, Hash.new])
-      exp2 = Expectation.new(Object.new, :foo, :track, [1, 2])
-      assert_not_equal(exp1, exp2)
-    end
-    
-    def test_equality_based_on_return_value
-      exp1 = Expectation.new(Object.new, :foo, :track, [1], [:return])
-      exp2 = Expectation.new(Object.new, :foo, :track, [1], [:return])
-      assert_equal(exp1, exp2)
-    end
-    
-    def test_non_equality_based_on_different_return_value_type_for_instance
-      exp1 = Expectation.new(Object.new, :foo, :track, [1], [:sym])
-      exp2 = Expectation.new(Object.new, :foo, :track, [1], ["string"])
-      assert_not_equal(exp1, exp2)
-    end
-    
-    def test_non_equality_based_on_different_return_value_type_for_class
-      exp1 = Expectation.new(Hash, :foo, :track, [1], [:sym])
-      exp2 = Expectation.new(Hash, :foo, :track, [1], ["string"])
-      assert_not_equal(exp1, exp2)
-    end
     
     def test_make_sure_equality_works_with_uniq
       expectations = [
@@ -104,6 +62,17 @@ module Synthesis
       expectation.add_return_values("str")
       actual = expectation.instance_variable_get(:@return_values)
       assert_equal([:sym, "str"], actual)
+    end
+    
+    def test_return_values_defined_when_adding_return_values
+      expectation = Expectation.new(String.new, :new, :track, [], [:sym])
+      expectation.add_return_values("str")
+      assert(expectation.return_values_defined?)
+    end
+    
+    def test_return_values_not_defined_when_no_return_values_added
+      expectation = Expectation.new(String.new, :new, :track, [], [:sym])
+      assert(!expectation.return_values_defined?)
     end
   end
 end

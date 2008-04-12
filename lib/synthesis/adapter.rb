@@ -16,6 +16,7 @@ module Synthesis
       Dir[@pattern].each { |t| require t }
       exit -1 unless yield
       log "Verifying expectation invocations..."
+      stop_collecting_expectations
       ExpectationRecord.record_invocations
       yield
     end

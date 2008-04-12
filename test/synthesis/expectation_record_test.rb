@@ -14,10 +14,10 @@ module Synthesis
 
     def test_watches_expectation_invocations
       c = Class.new { def foo; end }
-      ExpectationRecord.add_expectation c.new, :foo, :track
+      ExpectationRecord.add_expectation(c.new, :foo, :track)
       ExpectationRecord.record_invocations
       a = c.new
-      MethodInvocationWatcher.expects(:invoked).with(a, :foo, [])
+      MethodInvocationWatcher.expects(:invoked).with(a, :foo, [], [nil])
       a.foo
     end
 

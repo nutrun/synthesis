@@ -1,6 +1,5 @@
 module Synthesis
   module Expectation
-    #FIXME: make return values a Set
     def self.new(receiver, method, track, args = [], return_values = [])
       receiver.expectation(method, track, args, return_values)
     end
@@ -41,11 +40,16 @@ module Synthesis
       end
       
       def return_value_types
-        @return_values.map { |val| val.class }
+        @return_values.map { |val| val.class }.uniq
       end
       
       def add_return_values(*vals)
+        @return_values_defined = true
         @return_values += vals
+      end
+      
+      def return_values_defined?
+        @return_values_defined
       end
     end
   
@@ -63,7 +67,10 @@ module Synthesis
       end
       
       def to_s
-        "(#{return_values.class})#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
+        #FIXME: Report on return value types, too
+        "(#{return_value_types * ", "}) " +
+        "#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '})" + 
+        "in #{@track}"
       end
     end
     
@@ -81,7 +88,10 @@ module Synthesis
       end
       
       def to_s
-        "(#{return_values.class})#{meta_receiver.name}.new.#{@method}(#{@args.map { |arg| arg.class } * ', '}) in #{@track}"
+        "(#{return_value_types * ", "}) " +
+        "#{meta_receiver.name}.new.#{@method}" +
+        "(#{@args.map { |arg| arg.class } * ', '})" + 
+        "in #{@track}"
       end
     end
     

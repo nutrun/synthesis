@@ -19,8 +19,9 @@ module Synthesis
       
     @@recordable_method_def = proc { |meth| %(
       def #{meth}(*args, &block)
-        MethodInvocationWatcher.invoked(self, "#{meth}".intern, args)
-        send "__recordable__#{meth}", *args, &block
+        return_value = send("__recordable__#{meth}", *args, &block)
+        MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
+        return_value
       end
     )}
     
@@ -30,8 +31,9 @@ module Synthesis
       
     @@recordable_magic_method_def = proc { |meth| %(
       def #{meth}(*args)
-        MethodInvocationWatcher.invoked(self, "#{meth}".intern, args)
-        method_missing(:#{meth}, *args)
+        return_value = method_missing(:#{meth}, *args)
+        MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
+        return_value
       end
       
       def __recordable__#{meth}() raise "Don't ever call me" end

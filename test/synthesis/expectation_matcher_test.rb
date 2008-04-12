@@ -33,7 +33,8 @@ module Synthesis
     end
     
     def test_no_match_based_on_return_value_types
-      exp1 = Expectation.new(Object.new, :foo, :track, [Array, Hash], [:sym])
+      exp1 = Expectation.new(Object.new, :foo, :track, [Array, Hash])
+      exp1.add_return_values(:sym)
       exp2 = Expectation.new(Object.new, :foo, :track, [Array, Hash], ["string"])
       assert(!ExpectationMatcher.new(exp1, exp2).match?)
     end
@@ -41,6 +42,12 @@ module Synthesis
     def test_match_based_on_intersection_of_return_value_types
       exp1 = Expectation.new(Object.new, :foo, :track, [Array, Hash], [[1], {:a => :b}])
       exp2 = Expectation.new(Object.new, :foo, :track, [Array, Hash], [[4], {:a => 9}])
+      assert(ExpectationMatcher.new(exp1, exp2).match?)
+    end
+    
+    def test_ignores_return_value_types_unless_return_values_defined
+      exp1 = Expectation.new(Object.new, :foo, :track, [Array, Hash])
+      exp2 = Expectation.new(Object.new, :foo, :track, [Array, Hash])
       assert(ExpectationMatcher.new(exp1, exp2).match?)
     end
   end  
