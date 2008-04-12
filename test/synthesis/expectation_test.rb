@@ -64,7 +64,7 @@ module Synthesis
       assert_equal([:sym, "str"], actual)
     end
     
-    def test_return_values_defined_when_adding_return_values
+    def test_return_values_defined_when_return_values_added
       expectation = Expectation.new(String.new, :new, :track, [], [:sym])
       expectation.add_return_values("str")
       assert(expectation.return_values_defined?)
