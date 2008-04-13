@@ -67,7 +67,6 @@ module Synthesis
       end
       
       def to_s
-        #FIXME: Report on return value types, too
         "(#{return_value_types * ", "}) " +
         "#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '})" + 
         "in #{@track}"

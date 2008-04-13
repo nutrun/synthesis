@@ -29,7 +29,6 @@ module Synthesis
     end
     
     class << self
-      
       def inherited(subclass)
         @adapter = subclass
       end
