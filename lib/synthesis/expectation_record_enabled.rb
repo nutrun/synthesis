@@ -8,7 +8,7 @@ module Synthesis
     def record_expectations_on(method_name)
       @original_expects = method_name
       
-      class_eval %(
+      class_eval <<-end_eval
         alias intercepted_#{@original_expects} #{@original_expects}
 
         def #{@original_expects}(meth)
@@ -17,16 +17,16 @@ module Synthesis
           m_expectation.synthesis_expectation = s_expectation
           m_expectation
         end
-      )
+      end_eval
     end
     
     # Restore the original methods ExpectationRecordEnabled has rewritten and
     # undefine their intercepted counterparts.
     def reset!
-      class_eval %(
+      class_eval <<-end_eval
         alias #{@original_expects} intercepted_#{@original_expects}
         undef intercepted_#{@original_expects}
-      )
+      end_eval
     end
   end
 end

@@ -13,30 +13,26 @@ module Synthesis
     def defined_recordable_method(meth)
       unless method_defined?("__recordable__#{meth}".intern)
         alias_method "__recordable__#{meth}".intern, meth
-        class_eval @@recordable_method_def[meth]
+        class_eval <<-end_eval
+          def #{meth}(*args, &block)
+            return_value = send("__recordable__#{meth}", *args, &block)
+            MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
+            return_value
+          end
+        end_eval
       end
     end
       
-    @@recordable_method_def = proc { |meth| %(
-      def #{meth}(*args, &block)
-        return_value = send("__recordable__#{meth}", *args, &block)
-        MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
-        return_value
-      end
-    )}
-    
     def magic_recordable_method(meth)
-      class_eval @@recordable_magic_method_def[meth]
+      class_eval <<-end_eval
+        def #{meth}(*args)
+          return_value = method_missing(:#{meth}, *args)
+          MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
+          return_value
+        end
+
+        def __recordable__#{meth}() raise "Don't ever call me" end
+      end_eval
     end
-      
-    @@recordable_magic_method_def = proc { |meth| %(
-      def #{meth}(*args)
-        return_value = method_missing(:#{meth}, *args)
-        MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
-        return_value
-      end
-      
-      def __recordable__#{meth}() raise "Don't ever call me" end
-    )}
   end
 end
