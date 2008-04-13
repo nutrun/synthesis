@@ -13,11 +13,11 @@ module Synthesis
     
     def collect_expectations
       ignore_instances_of Spec::Mocks::Mock
+      Spec::Mocks::Methods.extend(ExpectationRecordEnabled)
+      Spec::Mocks::Methods.record_expectations_on(:should_receive)
       Spec::Mocks::MessageExpectation.extend(ExpectationInterceptor)
       Spec::Mocks::MessageExpectation.intercept_expected_argument_types_on(:with)
       Spec::Mocks::MessageExpectation.intercept_expected_return_values_on(:and_return)
-      Spec::Mocks::Methods.extend(ExpectationRecordEnabled)
-      Spec::Mocks::Methods.record_expectations_on(:should_receive)
     end
     
     def stop_collecting_expectations

@@ -1,5 +1,10 @@
 module Synthesis
+  # Extend by the mock object framework's expectation mechanism to allow
+  # Synthesis to tap into it in order to collect simulated method arguments
+  # and return values.
   module ExpectationInterceptor
+    # Intercept the mock object framework's expectation method for declaring a mocked
+    # method's arguments so that Synthesis can record them.
     def intercept_expected_argument_types_on(method_name)
       @original_with = method_name
       
@@ -13,6 +18,8 @@ module Synthesis
       )
     end
     
+    # Intercept the mock object framework's expectation method for declaring a mocked
+    # method's return values so that Synthesis can record them.
     def intercept_expected_return_values_on(method_name)
       @original_returns = method_name
       
@@ -27,15 +34,22 @@ module Synthesis
       )
     end
     
+    # Restore the original methods ExpectationInterceptor has rewritten and
+    # undefine their intercepted counterparts. Undefine the synthesis_expectation
+    # accessors.
     def reset!
       class_eval %(
         alias #{@original_with} intercepted_#{@original_with}
         alias #{@original_returns} intercepted_#{@original_returns}
         undef intercepted_#{@original_with}
         undef intercepted_#{@original_returns}
+        undef synthesis_expectation
+        undef synthesis_expectation=
       )
     end
     
+    # Classes extending ExpectationInterceptor will have a synthesis_expectation
+    # attribute accessor added to them.
     def self.extended(receiver)
       receiver.send(:attr_accessor, :synthesis_expectation)
     end

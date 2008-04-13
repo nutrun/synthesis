@@ -1,5 +1,6 @@
 module Synthesis
-  # Subclasses of Adapter must implement the "run" method. 
+  # Subclasses of Adapter must implement the run, collect_expectations and
+  # stop_collecting_expectations methods. 
   # For example implementations, refer to Synthesis::MochaAdapter and
   # Synthesis::RSpecAdapter
   class Adapter

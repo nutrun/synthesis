@@ -1,5 +1,10 @@
 module Synthesis
+  # Extend by the mock object framework's construct for declaring a
+  # mock object so that Synthesis can tap into it in order to record
+  # the expectation.
   module ExpectationRecordEnabled
+    # Intercept the mock object framework's method for declaring a mock
+    # object so that Synthesis can record it.
     def record_expectations_on(method_name)
       @original_expects = method_name
       
@@ -15,6 +20,8 @@ module Synthesis
       )
     end
     
+    # Restore the original methods ExpectationRecordEnabled has rewritten and
+    # undefine their intercepted counterparts.
     def reset!
       class_eval %(
         alias #{@original_expects} intercepted_#{@original_expects}
