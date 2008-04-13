@@ -13,6 +13,7 @@ module Synthesis
     # once for verifying the collected expectations. 
     def fail_unless(&block)
       log "Collecting expectations..."
+      collect_expectations
       Dir[@pattern].each { |t| require t }
       exit -1 unless yield
       log "Verifying expectation invocations..."
@@ -21,12 +22,13 @@ module Synthesis
       yield
     end
     
+    # The type of object representing a mock or stub for the test framework. 
+    # Objects of this type will be ignored by Synthesis.
+    def ignore_instances_of(type)
+      Synthesis.const_set(:MOCK_OBJECT, type)
+    end
+    
     class << self
-      # The type of object representing a mock or stub for the test framework. 
-      # Objects of this type will be ignored by Synthesis.
-      def ignore_instances_of(type)
-        Synthesis.const_set(:MOCK_OBJECT, type)
-      end
       
       def inherited(subclass)
         @adapter = subclass
