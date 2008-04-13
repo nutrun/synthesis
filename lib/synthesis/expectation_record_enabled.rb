@@ -12,7 +12,7 @@ module Synthesis
         alias intercepted_#{@original_expects} #{@original_expects}
 
         def #{@original_expects}(meth)
-          s_expectation = Synthesis::ExpectationRecord.add_expectation(self, meth, caller[0])
+          s_expectation = ExpectationRecord.add_expectation(self, meth, caller[0])
           m_expectation = intercepted_#{@original_expects}(meth)
           m_expectation.synthesis_expectation = s_expectation
           m_expectation
