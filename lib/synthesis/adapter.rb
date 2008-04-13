@@ -2,7 +2,7 @@ module Synthesis
   # Subclasses of Adapter must implement the run, collect_expectations and
   # stop_collecting_expectations methods. 
   # For example implementations refer to Synthesis::MochaAdapter and
-  # Synthesis::RSpecAdapter
+  # Synthesis::RSpecAdapter.
   class Adapter
     include Logging
     
