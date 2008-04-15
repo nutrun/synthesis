@@ -4,7 +4,7 @@
 
 Currently we believe that developers are writing unnecessary <em>dependency wired</em> tests to cover uncertainty about the validity of simulated interactions in their <em>dependency neutral</em> tests.  In other words, we cannot be certain that all our simulated interaction based tests 'join up'.  If it were possible to correlate the simulated interactions in our tests, then we should be able to do away with the need to write large numbers of complex, slow and brittle wired tests (apart from those which interact with the boundaries of the SUT).
 
-Synthesis combines lightweight, <em>dependency neutral</em> tests to build confidence that the system under test is complete and reduces the need for large, overarching tests.
+Synthesis combines lightweight tests to build confidence that the system under test is complete and reduces the need for large, overarching tests.
 
 == Installation
 
