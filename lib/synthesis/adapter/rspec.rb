@@ -8,7 +8,10 @@ module Synthesis
   class RSpecAdapter < Adapter
     def run
       rspec_options.files.clear
-      fail_unless { rspec_options.run_examples }
+      fail_unless do
+        rspec_options.instance_variable_set(:@formatters, nil)
+        rspec_options.run_examples
+      end
     end
     
     def collect_expectations
