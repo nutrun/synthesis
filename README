@@ -67,6 +67,10 @@ To use with Expectations, redirecting output to a file
 
 Reporting the location (filename and line number) of tested/untested expectations doesn't work as intended with the Expectations adapter.
 
+== Contributors
+
+Danilo Sato, Paul Nasrat
+
 == Related reading
 
 * Synthesized Testing: A Primer ( http://nutrun.com/weblog/synthesized-testing-a-primer )
