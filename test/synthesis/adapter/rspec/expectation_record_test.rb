@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + "/helper"
 module Synthesis
   class ExpectationRecordTest < Test::Unit::TestCase
     def teardown
-      ExpectationRecord.expectations.clear
+      ExpectationRecord.send(:reset!)
     end
 
     def test_does_not_add_any_instance_expectation
