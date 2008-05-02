@@ -16,7 +16,8 @@ module Synthesis
       end
 
       def expectations
-        # Using an Array instead of a Set because the +Expectation+ instance is not complete when first added
+        # Using an Array instead of a Set because the +Expectation+ instance 
+        # is not complete when first added. A Set would result to possible duplicates.
         # obj.expects(:method).with(:args)
         # the +Expectation+ will be added when obj.expects(:method) is called
         # the +Expectation+ arguments will be added when .with(:args) is called
@@ -30,7 +31,8 @@ module Synthesis
       end
 
       def [](matcher)
-        # Using a hash when recording invocations for improving performance
+        # Using a hash when for faster look up of expectations 
+        # when recording invocations
         expectations_hash[matcher] || Expectation::NilExpectation.new
       end
 
