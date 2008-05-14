@@ -47,5 +47,20 @@ module Synthesis
       actual.add_return_values(:return_val)
       assert_equal(expected, actual)
     end
+    
+    def test_uniqs_expectations_before_recording_invocations
+      ExpectationRecord.add_expectation(Hash, :foo, :track)
+      ExpectationRecord.add_expectation(Hash, :foo, :track)
+      assert_equal(2, ExpectationRecord.expectations.size)
+      ExpectationRecord.record_invocations
+      assert_equal(1, ExpectationRecord.expectations.size)
+    end
+    
+    def test_flattens_expectations_before_recording_invocations
+      expectation = ExpectationRecord.add_expectation(Hash, :foo, :track)
+      expectation.add_return_values(1, "str", "sym")
+      ExpectationRecord.record_invocations
+      ExpectationRecord.expectations.each { |val| assert(!val.is_a?(Array)) }
+    end
   end
 end

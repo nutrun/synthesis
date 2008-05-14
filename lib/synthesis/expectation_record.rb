@@ -22,7 +22,6 @@ module Synthesis
         # the +Expectation+ will be added when obj.expects(:method) is called
         # the +Expectation+ arguments will be added when .with(:args) is called
         @expectations ||= []
-        @expectations.uniq!
         @expectations
       end
 
@@ -37,6 +36,9 @@ module Synthesis
       end
 
       def record_invocations
+        @expectations.map! { |e| e.explode }
+        @expectations.flatten!
+        @expectations.uniq!
         expectations.each { |e| e.record_invocations }
       end
 
