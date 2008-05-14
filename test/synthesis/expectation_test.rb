@@ -74,5 +74,21 @@ module Synthesis
       expectation = Expectation.new(String.new, :new, :track, [], [:sym])
       assert(!expectation.return_values_defined?)
     end
+    
+    def test_explodes_to_new_expectations_for_each_return_value
+      expectation = Expectation.new(String, :new, :track, [])
+      expectation.add_return_values(:sym, "str")
+      expected = [
+        Expectation.new(String, :new, :track, [], [:sym]),
+        Expectation.new(String, :new, :track, [], ["str"])
+      ]
+      assert_equal(expected, expectation.explode)
+    end
+    
+    def test_returns_self_when_only_one_return_type_on_explode
+      expectation = Expectation.new(String, :new, :track, [])
+      expectation.add_return_values("rock")
+      assert_equal(expectation, expectation.explode)
+    end
   end
 end

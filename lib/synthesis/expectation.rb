@@ -19,6 +19,18 @@ module Synthesis
         meta_receiver.recordable_method(@method)
       end
       
+      def explode
+        if @return_values.size > 1
+          @return_values.map do |v|
+            expectation = self.class.new(@receiver, @method, @track, @args, [])
+            expectation.add_return_values(v)
+            expectation
+          end
+        else
+          self
+        end
+      end
+      
       def eql?(other)
         ExpectationMatcher.new(self, other).match?
       end
