@@ -36,9 +36,9 @@ module Synthesis
       end
 
       def record_invocations
-        @expectations.map! { |e| e.explode }
-        @expectations.flatten!
-        @expectations.uniq!
+        expectations.map! { |e| e.explode }
+        expectations.flatten!
+        expectations.uniq!
         expectations.each { |e| e.record_invocations }
       end
 
