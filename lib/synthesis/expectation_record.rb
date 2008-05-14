@@ -4,7 +4,7 @@ module Synthesis
       include Logging
 
       def add_expectation(receiver, method, track, args = [])
-        unless ignore? receiver
+        unless ignore?(receiver)
           expectation = Expectation.new(receiver, method, track, args)
           expectations << expectation
           expectation
@@ -12,7 +12,7 @@ module Synthesis
       end
 
       def ignore(*args)
-        ignored.merge args
+        ignored.merge(args)
       end
 
       def expectations

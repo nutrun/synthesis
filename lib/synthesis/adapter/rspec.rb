@@ -10,6 +10,7 @@ module Synthesis
       rspec_options.files.clear
       fail_unless do
         rspec_options.instance_variable_set(:@formatters, nil)
+        # rspec_options.instance_variable_set(:@format_options, [["profile", STDOUT]])
         rspec_options.run_examples
       end
     end
