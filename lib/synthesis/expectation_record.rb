@@ -30,7 +30,7 @@ module Synthesis
       end
 
       def [](matcher)
-        # Using a hash when for faster look up of expectations 
+        # Using a hash for faster look up of expectations 
         # when recording invocations
         expectations_hash[matcher] || Expectation::NilExpectation.new
       end
