@@ -42,7 +42,7 @@ To use with Test::Unit and Mocha, ignoring Array and Hash:
 	
   Synthesis::Task.new do |t|
     t.pattern = 'test/unit/**/*_test.rb'
-    t.ignore Array, Hash
+    t.ignored = %w[Array, Hash]
   end
 
 To use with RSpec, running all specs in the <tt>spec</tt> directory:
@@ -74,6 +74,7 @@ Danilo Sato, Paul Nasrat
 == Related reading
 
 * Synthesized Testing: A Primer ( http://nutrun.com/weblog/synthesized-testing-a-primer )
+* Confidence as a test code metric ( http://nutrun.com/weblog/confidence-as-a-test-code-metric )
 * Using Synthesis With Test::Unit and Mocha ( http://nutrun.com/weblog/using-synthesis-with-testunit-and-mocha )
 * Using Synthesis With Expectations ( http://nutrun.com/weblog/using-synthesis-with-expectations )
 * Synthesis validates simulated method calls taking method signature arguments into account ( http://nutrun.com/weblog/synthesis-002 )

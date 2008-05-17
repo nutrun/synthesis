@@ -20,7 +20,7 @@ module Synthesis
     def ignore(*classes)
       STDERR.puts
       STDERR.puts "DEPRECATION WARNING!!!"
-      STDERR.puts "File: #{__FILE__}, line: #{__LINE__}"
+      STDERR.puts caller[0]
       STDERR.puts "Synthesis::Task#ignore(*classes) has been deprecated."
       STDERR.puts "Use Synthesis::Task#ignored = %w[#{classes * ','}] instead."
       STDERR.puts
