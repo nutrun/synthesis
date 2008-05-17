@@ -22,7 +22,6 @@ module Synthesis
         # the +Expectation+ will be added when obj.expects(:method) is called
         # the +Expectation+ arguments will be added when .with(:args) is called
         @expectations ||= []
-        @expectations
       end
 
       def ignored
