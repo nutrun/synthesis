@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
-require 'rake'
-require 'rake/tasklib'
+require "rake"
+require "rake/tasklib"
+require File.dirname(__FILE__) + "/../synthesis/logging"
 
 module Synthesis
   class Task < Rake::TaskLib
-    attr_accessor :verbose, :pattern, :ruby_opts, :adapter, :out
+    include Logging
+    attr_accessor :verbose, :pattern, :ruby_opts, :adapter, :out, :ignored
 
     def initialize(name='synthesis:test')
       @name, @ignored = name, []
@@ -16,6 +18,12 @@ module Synthesis
     end
     
     def ignore(*classes)
+      STDERR.puts
+      STDERR.puts "DEPRECATION WARNING!!!"
+      STDERR.puts "File: #{__FILE__}, line: #{__LINE__}"
+      STDERR.puts "Synthesis::Task#ignore(*classes) has been deprecated."
+      STDERR.puts "Use Synthesis::Task#ignored = %w[#{classes * ','}] instead."
+      STDERR.puts
       @ignored << classes
       @ignored.flatten!
     end
