@@ -39,7 +39,7 @@ module Synthesis
       assert(!ExpectationMatcher.new(exp1, exp2).match?)
     end
     
-    def test_match_based_on_intersection_of_return_value_types
+    def test_match_based_on_return_value_types
       exp1 = Expectation.new(Object.new, :foo, :track, [Array, Hash], [[1], {:a => :b}])
       exp2 = Expectation.new(Object.new, :foo, :track, [Array, Hash], [[4], {:a => 9}])
       assert(ExpectationMatcher.new(exp1, exp2).match?)

@@ -91,7 +91,7 @@ end
 
 gem_spec = Gem::Specification.new do |s|
   s.name = 'synthesis'
-  s.version = '0.0.13'
+  s.version = '0.0.14'
   s.platform = Gem::Platform::RUBY
   s.rubyforge_project = "synthesis"
   s.summary, s.description = 'A tool for Synthesized Testing'
