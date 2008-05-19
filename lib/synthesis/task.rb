@@ -22,7 +22,7 @@ module Synthesis
       STDERR.puts "DEPRECATION WARNING!!!"
       STDERR.puts caller[0]
       STDERR.puts "Synthesis::Task#ignore(*classes) has been deprecated."
-      STDERR.puts "Use Synthesis::Task#ignored = %w[#{classes * ' '}] instead."
+      STDERR.puts "Use Synthesis::Task#ignored = [#{classes * ','}] instead."
       STDERR.puts
       @ignored << classes
       @ignored.flatten!
