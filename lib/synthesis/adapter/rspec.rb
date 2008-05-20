@@ -20,13 +20,13 @@ module Synthesis
       Spec::Mocks::Methods.extend(ExpectationRecordEnabled)
       Spec::Mocks::Methods.record_expectations_on(:should_receive)
       Spec::Mocks::MessageExpectation.extend(ExpectationInterceptor)
-      Spec::Mocks::MessageExpectation.intercept_expected_argument_types_on(:with)
-      Spec::Mocks::MessageExpectation.intercept_expected_return_values_on(:and_return)
+      Spec::Mocks::MessageExpectation.record_expected_argument_types_on(:with)
+      Spec::Mocks::MessageExpectation.record_expected_return_values_on(:and_return)
     end
     
     def stop_collecting_expectations
-      Spec::Mocks::MessageExpectation.reset!
-      Spec::Mocks::Methods.reset!
+      Spec::Mocks::MessageExpectation.stop_intercepting!
+      Spec::Mocks::Methods.stop_recording!
     end
   end  
 end

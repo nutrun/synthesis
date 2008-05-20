@@ -16,13 +16,13 @@ module Synthesis
       Object.extend(ExpectationRecordEnabled)
       Object.record_expectations_on(:expects)
       Mocha::Expectation.extend(ExpectationInterceptor)
-      Mocha::Expectation.intercept_expected_argument_types_on(:with)
-      Mocha::Expectation.intercept_expected_return_values_on(:returns)
+      Mocha::Expectation.record_expected_argument_types_on(:with)
+      Mocha::Expectation.record_expected_return_values_on(:returns)
     end
     
     def stop_collecting_expectations
-      Mocha::Expectation.reset!
-      Object.reset!
+      Mocha::Expectation.stop_intercepting!
+      Object.stop_recording!
     end
   end  
 end

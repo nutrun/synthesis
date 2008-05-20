@@ -22,7 +22,7 @@ module Synthesis
     
     # Restore the original methods ExpectationRecordEnabled has rewritten and
     # undefine their intercepted counterparts.
-    def reset!
+    def stop_recording!
       class_eval <<-end_eval
         alias #{@original_expects} intercepted_#{@original_expects}
         undef intercepted_#{@original_expects}

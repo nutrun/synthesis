@@ -5,7 +5,7 @@ module Synthesis
   module ExpectationInterceptor
     # Intercept the mock object framework's expectation method for declaring a mocked
     # method's arguments so that Synthesis can record them.
-    def intercept_expected_argument_types_on(method_name)
+    def record_expected_argument_types_on(method_name)
       @original_with = method_name
       
       class_eval <<-end_eval
@@ -20,7 +20,7 @@ module Synthesis
     
     # Intercept the mock object framework's expectation method for declaring a mocked
     # method's return values so that Synthesis can record them.
-    def intercept_expected_return_values_on(method_name)
+    def record_expected_return_values_on(method_name)
       @original_returns = method_name
       
       class_eval <<-end_eval
@@ -37,7 +37,7 @@ module Synthesis
     # Restore the original methods ExpectationInterceptor has rewritten and
     # undefine their intercepted counterparts. Undefine the synthesis_expectation
     # accessors.
-    def reset!
+    def stop_intercepting!
       class_eval <<-end_eval
         alias #{@original_with} intercepted_#{@original_with}
         alias #{@original_returns} intercepted_#{@original_returns}
