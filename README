@@ -80,6 +80,8 @@ Or, in the case of RSpec, it is equivalent to:
   foo_mock = Foo.new
   Foo.should_receive(:new).with(arg_one, arg_two).and_return(foo_mock)
 
+Either <tt>"mocha_standalone"</tt> or <tt>"spec/mocks"</tt> need to be required before using <tt>mock_instance</tt>.
+
 == Known Issues
 
 Reporting the location (filename and line number) of tested/untested expectations doesn't work as intended with the Expectations adapter.
