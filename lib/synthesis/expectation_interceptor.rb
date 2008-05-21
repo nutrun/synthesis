@@ -23,29 +23,30 @@ module Synthesis
     def record_expected_return_values_on(method_name)
       @original_returns = method_name
       
-      class_eval <<-end_eval
-        alias intercepted_#{@original_returns} #{@original_returns}
-
-        def #{@original_returns}(*values)
-          mock_expectation = intercepted_#{@original_returns}(*values)
+      class_eval do
+        alias_method "intercepted_#{method_name}", method_name
+        
+        define_method(method_name) do |*values|
+          mock_expectation = send("intercepted_#{method_name}", *values)
           synthesis_expectation.add_return_values(*values) if synthesis_expectation
           mock_expectation
         end
-      end_eval
+      end
     end
     
     # Restore the original methods ExpectationInterceptor has rewritten and
     # undefine their intercepted counterparts. Undefine the synthesis_expectation
     # accessors.
     def stop_intercepting!
-      class_eval <<-end_eval
-        alias #{@original_with} intercepted_#{@original_with}
-        alias #{@original_returns} intercepted_#{@original_returns}
-        undef intercepted_#{@original_with}
-        undef intercepted_#{@original_returns}
-        undef synthesis_expectation
-        undef synthesis_expectation=
-      end_eval
+      with_method, returns_method = @original_with, @original_returns
+      class_eval do
+        alias_method with_method, "intercepted_#{with_method}"
+        alias_method returns_method, "intercepted_#{returns_method}"
+        remove_method "intercepted_#{with_method}"
+        remove_method "intercepted_#{returns_method}"
+        remove_method :synthesis_expectation
+        remove_method :synthesis_expectation=
+      end
     end
     
     # Classes extending ExpectationInterceptor will have a synthesis_expectation
