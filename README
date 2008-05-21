@@ -42,7 +42,7 @@ To use with Test::Unit and Mocha, ignoring Array and Hash:
 	
   Synthesis::Task.new do |t|
     t.pattern = 'test/unit/**/*_test.rb'
-    t.ignored = %w[Array, Hash]
+    t.ignored = [Array, Hash]
   end
 
 To use with RSpec, running all specs in the <tt>spec</tt> directory:
@@ -62,6 +62,20 @@ To use with Expectations, redirecting output to a file
     t.adapter = :expectations
     t.out = File.new "synthesis.test.txt", "a"
   end
+
+== Utilities
+
+=== mock_instance
+
+  require "synthesis/util/mock_instance/mocha"
+  foo_mock = Foo.mock_instance(arg_one, arg_2)
+
+This is equivalent, but without calling the real <tt>initialize</tt>, to:
+
+  foo_mock = Foo.new
+  Foo.expects(:new).with(arg_one, arg_two).returns(foo_mock)
+
+For RSpec, use <tt>require "synthesis/util/mock_instance/rspec"</tt>.
 
 == Known Issues
 
