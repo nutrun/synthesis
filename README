@@ -67,7 +67,7 @@ To use with Expectations, redirecting output to a file
 
 === mock_instance
 
-  require "synthesis/util/mock_instance/mocha"
+  require "synthesis/util/mock_instance"
   foo_mock = Foo.mock_instance(arg_one, arg_2)
 
 This is equivalent, but without calling the real <tt>initialize</tt>, to:
@@ -75,7 +75,10 @@ This is equivalent, but without calling the real <tt>initialize</tt>, to:
   foo_mock = Foo.new
   Foo.expects(:new).with(arg_one, arg_two).returns(foo_mock)
 
-For RSpec, use <tt>require "synthesis/util/mock_instance/rspec"</tt>.
+Or, in the case of RSpec, it is equivalent to:
+
+  foo_mock = Foo.new
+  Foo.should_receive(:new).with(arg_one, arg_two).and_return(foo_mock)
 
 == Known Issues
 
