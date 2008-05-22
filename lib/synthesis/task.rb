@@ -6,7 +6,7 @@ require File.dirname(__FILE__) + "/../synthesis/logging"
 module Synthesis
   class Task < Rake::TaskLib
     include Logging
-    attr_accessor :verbose, :pattern, :ruby_opts, :adapter, :out, :ignored
+    attr_accessor :verbose, :pattern, :ruby_opts, :adapter, :out, :ignored, :formatter
 
     def initialize(name='synthesis:test')
       @name, @ignored = name, []
@@ -14,6 +14,7 @@ module Synthesis
       @pattern ||= 'test/**/*.rb'
       @ruby_opts ||= []
       @adapter ||= :mocha
+      @formatter ||= :plain
       define
     end
     
@@ -37,7 +38,7 @@ module Synthesis
           require File.dirname(__FILE__) + "/../synthesis/runner"
           Synthesis::Logging.const_set(:OUT, @out) if @out
           Synthesis::ExpectationRecord.ignore(*@ignored)
-          Synthesis::Runner.run(@adapter, @pattern)
+          Synthesis::Runner.run(@adapter, @pattern, @formatter)
         end
       end
       self

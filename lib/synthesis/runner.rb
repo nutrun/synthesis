@@ -1,9 +1,9 @@
 module Synthesis
   class Runner
-    def self.run(adapter, pattern)
+    def self.run(adapter, pattern, format = :plain)
       require "synthesis/adapter/#{adapter}"
       Adapter.load(pattern).run
-      exit Reporter.report unless $!
+      exit Reporter.report(format) unless $!
     end    
   end
 end
