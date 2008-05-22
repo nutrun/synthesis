@@ -1,6 +1,5 @@
 module Synthesis
   class DotFormatter < Formatter
-    include Logging
     def format_digraph
       format_header
       puts "  edge [color = green]"
