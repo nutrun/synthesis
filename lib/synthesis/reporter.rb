@@ -1,8 +1,8 @@
 module Synthesis
   class Reporter
     class << self
-      def report(format)
-        formatter = Formatter.for(format, ExpectationRecord)
+      def report
+        formatter = Formatter.load
         if failed?
           formatter.format_failure
           return -1
