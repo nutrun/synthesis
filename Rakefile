@@ -37,7 +37,7 @@ end
 
 Synthesis::Task.new do |t|
   t.pattern = 'test_project/mocha/test/*_test.rb'
-  t.ignored = %w[Array Hash]
+  t.ignored = [Array, Hash]
   # t.out = File.new('synthesis.test.txt', 'a')
 end
 
