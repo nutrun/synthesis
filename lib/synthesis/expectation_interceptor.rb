@@ -8,19 +8,14 @@ module Synthesis
     def record_expected_argument_types_on(method_name)
       @original_with = method_name
       
-      class_eval do
-        alias_method "intercepted_#{method_name}", method_name
+      class_eval <<-end_eval
+        alias intercepted_#{@original_with} #{@original_with}
         
-        define_method(:get_method_name) {method_name}
-        
-        def temporary_method_name(*expected_parameters, &matching_block)
+        def #{@original_with}(*expected_parameters, &matching_block)
           synthesis_expectation.args = expected_parameters if synthesis_expectation
-          send("intercepted_#{get_method_name}", *expected_parameters, &matching_block)
+          intercepted_#{@original_with}(*expected_parameters, &matching_block)
         end
-
-        alias_method method_name, :temporary_method_name
-        undef temporary_method_name
-      end
+      end_eval
     end
     
     # Intercept the mock object framework's expectation method for declaring a mocked
@@ -51,7 +46,6 @@ module Synthesis
         remove_method "intercepted_#{returns_method}"
         remove_method :synthesis_expectation
         remove_method :synthesis_expectation=
-        remove_method :get_method_name
       end
     end
     

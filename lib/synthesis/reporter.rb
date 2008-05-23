@@ -1,13 +1,18 @@
 module Synthesis
   class Reporter
     class << self
-      def report(format)
-        formatter = Formatter.for(format, ExpectationRecord)
+      include Logging
+
+      def report
         if failed?
-          formatter.format_failure
+          ExpectationRecord.print_tested_expectations
+          ExpectationRecord.print_untested_expectations
+          ExpectationRecord.print_ignored
+          log; log "FAILED."
           return -1
         end
-        formatter.format_success
+        log; log "Verified #{ExpectationRecord.expectations.size} expectations"
+        log "SUCCESS."
         0
       end
 
