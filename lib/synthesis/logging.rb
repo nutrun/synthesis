@@ -14,10 +14,6 @@ module Synthesis
       out.puts "[Synthesis] #{msg}" unless @silent
     end
     
-    def puts(msg = '')
-      out.puts "#{msg}" unless @silent
-    end
-    
     def out
       Synthesis::Logging.const_defined?(:OUT) ? OUT : STDOUT
     end

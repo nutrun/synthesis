@@ -37,7 +37,7 @@ end
 
 Synthesis::Task.new do |t|
   t.pattern = 'test_project/mocha/test/*_test.rb'
-  t.ignored = [Array, Hash]
+  t.ignored = %w[Array Hash]
   # t.out = File.new('synthesis.test.txt', 'a')
 end
 
@@ -54,39 +54,6 @@ desc "Upload RDoc to RubyForge"
 task :publish_rdoc do
   Rake::Task[:rdoc].invoke
   Rake::SshDirPublisher.new("gmalamid@rubyforge.org", "/var/www/gforge-projects/synthesis", "doc").upload
-end
-
-namespace :svn do
-  task :st do
-    puts %x[svn st]
-  end
-
-  task :up do
-    puts %x[svn up]
-  end
-
-  task :add do
-    %x[svn st].split(/\n/).each do |line|
-      trimmed_line = line.delete('?').lstrip
-      if line[0,1] =~ /\?/
-        %x[svn add #{trimmed_line}]
-        puts %[added #{trimmed_line}]
-      end
-    end
-  end
-  
-  task :delete do
-    %x[svn st].split(/\n/).each do |line|
-      trimmed_line = line.delete('!').lstrip
-      if line[0,1] =~ /\!/
-        %x[svn rm #{trimmed_line}]
-        puts %[removed #{trimmed_line}]
-      end
-    end
-  end
-
-  desc "Run before checking in"
-  task :pc => %w[svn:add svn:delete svn:up default svn:st]
 end
 
 gem_spec = Gem::Specification.new do |s|
