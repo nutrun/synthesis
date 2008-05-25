@@ -3,14 +3,10 @@ module Synthesis
     def format_digraph
       format_header
       puts "  edge [color = green]"
-      ExpectationRecord.tested_expectations.each do |exp|
-        puts "  \"#{exp.caller}\" -> \"#{exp.receiver_class}\" [ label = \"#{label_for(exp)}\" ];"
-      end
+      ExpectationRecord.tested_expectations.each { |exp| plot_expectation(exp)  }
       puts
       puts "  edge [color = red]"
-      ExpectationRecord.untested_expectations.each do |exp|
-        puts "  \"?\" -> \"#{exp.receiver_class}\" [ label = \"#{label_for(exp)}\" ];"
-      end
+      ExpectationRecord.untested_expectations.each  { |exp| plot_expectation(exp)  }
       format_footer
     end
     alias format_failure format_digraph
@@ -31,6 +27,22 @@ module Synthesis
     def label_for(expectation)
       "(#{expectation.return_value_types * ", "}) " +
       "#{expectation.method}(#{expectation.args.map { |arg| arg.class } * ', '})"
+    end
+    
+    def plot_expectation(expectation)
+      if path_to_spec = expectation.caller
+        complete_at = path_to_spec.size - 1
+        path_to_spec.each_with_index do |file, idx|
+          caller = file.split(':')[0]
+          if idx == complete_at
+            puts "  \"#{caller}\" -> \"#{expectation.receiver_class}\" [ label = \"#{label_for(expectation)}\" ];"
+          else
+            puts "  \"#{caller}\" -> \"#{path_to_spec[idx+1].split(':')[0]}\";"
+          end
+        end
+      else
+        puts "  \"?\" -> \"#{expectation.receiver_class}\" [ label = \"#{label_for(expectation)}\" ];"
+      end
     end
   end
 end
