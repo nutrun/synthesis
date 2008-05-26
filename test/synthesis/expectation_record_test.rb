@@ -32,19 +32,19 @@ module Synthesis
       ExpectationRecord.add_expectation Object.new, :foo, :track
       matcher = Expectation.new Object.new, :bar, :track
       actual_instance = ExpectationRecord[matcher]
-      assert_kind_of Expectation::NilExpectation, actual_instance
+      assert_kind_of(Expectation::NilExpectation, actual_instance)
     end
 
     def test_does_not_add_expectation_for_ignored_class
       ExpectationRecord.ignore(Hash)
       ExpectationRecord.add_expectation(Hash, :foo, :track)
-      assert ExpectationRecord.expectations.empty?
+      assert(ExpectationRecord.expectations.empty?)
     end
     
     def test_does_not_add_expectation_for_ignored_object
       ExpectationRecord.ignore(Hash)
       ExpectationRecord.add_expectation(Hash.new, :foo, :track)
-      assert ExpectationRecord.expectations.empty?
+      assert(ExpectationRecord.expectations.empty?)
     end
     
     def test_returns_added_expectation_on_add
