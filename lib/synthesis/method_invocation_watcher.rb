@@ -2,7 +2,6 @@ module Synthesis
   class MethodInvocationWatcher
     def self.invoked(receiver, method, args = [], return_values = [])
       cal = caller.clone
-      cal.shift # First is always (eval)
       path_from_spec = []
       begin
         c = cal.shift

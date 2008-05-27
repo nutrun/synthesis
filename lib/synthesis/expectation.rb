@@ -6,7 +6,7 @@ module Synthesis
   
     class Expectation
       include Logging
-      attr_reader :receiver, :method, :caller
+      attr_reader :receiver, :method
       attr_accessor :args
       
       def initialize(receiver, method, track, args, return_values)
@@ -43,8 +43,7 @@ module Synthesis
         @invoked
       end
       
-      def invoked!(caller)
-        @caller = caller
+      def invoked!
         @invoked = true
       end
       
@@ -109,7 +108,7 @@ module Synthesis
     
     class NilExpectation < Expectation
       def initialize;end
-      def invoked!(caller);end
+      def invoked!;end
       def record_invocations;end
     end
   end

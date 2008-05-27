@@ -10,7 +10,7 @@ module Synthesis
       ExpectationRecord.add_expectation(Hash, :to_s, :track, []).add_return_values(1)
       MethodInvocationWatcher.invoked(Hash, :to_s, [], [1])
       expectation = ExpectationRecord.expectations.to_a.first
-      assert expectation.invoked?
+      assert(expectation.invoked?)
     end
   end
 end
