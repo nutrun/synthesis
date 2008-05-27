@@ -72,7 +72,9 @@ module Synthesis
       end
 
       def ignore?(obj)
-        ignored.include?(obj.class) || (obj.is_a?(Class) && ignored.include?(obj)) || obj.is_a?(MOCK_OBJECT)
+        ignored.include?(obj.class) ||
+        (obj.is_a?(Class) && ignored.include?(obj)) ||
+        obj.is_a?(MOCK_OBJECT)
       end
 
       def reset!
