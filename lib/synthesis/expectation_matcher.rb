@@ -17,7 +17,7 @@ module Synthesis
     
     def return_values_match?
       return true unless @expectation_one.return_values_defined? || @expectation_two.return_values_defined?
-      @expectation_one.return_value_types == @expectation_two.return_value_types
+      @expectation_one.return_value_type == @expectation_two.return_value_type
     end
   end
 end

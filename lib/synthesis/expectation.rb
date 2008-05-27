@@ -51,8 +51,8 @@ module Synthesis
         args.map { |arg| arg.class }
       end
       
-      def return_value_types
-        @return_values.map { |val| val.class }.uniq
+      def return_value_type
+        @return_values[0].class
       end
       
       def add_return_values(*vals)
@@ -79,7 +79,7 @@ module Synthesis
       end
       
       def to_s
-        "(#{return_value_types * ", "}) " +
+        "(#{return_value_type}) " +
         "#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '})" + 
         "in #{@track}"
       end
@@ -99,8 +99,7 @@ module Synthesis
       end
       
       def to_s
-        "(#{return_value_types * ", "}) " +
-        "#{meta_receiver.name}.new.#{@method}" +
+        "(#{return_value_type} #{meta_receiver.name}.new.#{@method}) " +
         "(#{@args.map { |arg| arg.class } * ', '})" + 
         "in #{@track}"
       end

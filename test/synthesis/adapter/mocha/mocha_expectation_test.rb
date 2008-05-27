@@ -20,6 +20,7 @@ class MochaExpectationTest < Test::Unit::TestCase
   def test_passes_return_values_to_synthesis_expectation
     @mocha_expectation.synthesis_expectation = @synthesis_expectation
     @mocha_expectation.returns(:rock)
-    assert_equal([Fixnum, Symbol], @synthesis_expectation.return_value_types)
+    return_values = @synthesis_expectation.instance_variable_get(:@return_values)
+    assert_equal([1, :rock], return_values)
   end
 end
