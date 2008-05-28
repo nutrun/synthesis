@@ -90,5 +90,10 @@ module Synthesis
       expectation.add_return_values("rock")
       assert_equal(expectation, expectation.explode)
     end
+    
+    def test_returns_nil_when_no_return_values_on_return_value_type
+      expectation = Expectation.new(String, :new, :track, [])
+      assert_nil(expectation.return_value_type)
+    end
   end
 end

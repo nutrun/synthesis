@@ -11,4 +11,8 @@ Expectations do
       FileUtils.rm_f 'test.txt'
     end
   end
+  
+  expect Problem do
+    Storage.new("").ouch!
+  end
 end
