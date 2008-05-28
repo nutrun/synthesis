@@ -33,11 +33,12 @@ module Synthesis
       if path_to_spec = expectation.caller
         complete_at = path_to_spec.size - 1
         path_to_spec.each_with_index do |file, idx|
-          caller = file.split(':')[0]
+          from, from_line = file.split(':')
           if idx == complete_at
-            puts "  \"#{caller}\" -> \"#{expectation.receiver_class}\" [ label = \"#{label_for(expectation)}\" ];"
+            puts "  \"#{from}\" -> \"#{expectation.receiver_class}\" [ label = \"#{label_for(expectation)}\" ];"
           else
-            puts "  \"#{caller}\" -> \"#{path_to_spec[idx+1].split(':')[0]}\";"
+            to, to_line = path_to_spec[idx+1].split(':')
+            puts "  \"#{from}\" -> \"#{to}\" [ label = \"#{from_line} -> #{to_line}\" ];"
           end
         end
       else
