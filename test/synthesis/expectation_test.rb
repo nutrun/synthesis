@@ -52,9 +52,9 @@ module Synthesis
       assert_equal([Symbol, String], expectation.arg_types)
     end
     
-    def test_return_value_types
-      expectation = Expectation.new(String.new, :new, :track, [], [:sym, "str"])
-      assert_equal([Symbol, String], expectation.return_value_types)
+    def test_return_value_type
+      expectation = Expectation.new(String.new, :new, :track, [], [:sym])
+      assert_equal(Symbol, expectation.return_value_type)
     end
     
     def test_adds_return_value

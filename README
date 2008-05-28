@@ -82,6 +82,10 @@ Or, in the case of RSpec, it is equivalent to:
 
 Either <tt>"mocha_standalone"</tt> or <tt>"spec/mocks"</tt> need to be required before using <tt>mock_instance</tt>.
 
+== Git
+
+Public clone URL: git://github.com/gmalamid/synthesis.git
+
 == Known Issues
 
 Reporting the location (filename and line number) of tested/untested expectations doesn't work as intended with the Expectations adapter.
