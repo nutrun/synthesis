@@ -18,6 +18,7 @@ module Synthesis
       Mocha::Expectation.extend(ExpectationInterceptor)
       Mocha::Expectation.record_expected_argument_types_on(:with)
       Mocha::Expectation.record_expected_return_values_on(:returns)
+      Mocha::Expectation.record_expected_return_values_on(:raises)
     end
     
     def stop_collecting_expectations

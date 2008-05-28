@@ -13,4 +13,10 @@ describe DataBrander do
     m.should_receive(:foo)
     m.foo
   end
+  
+  it "should delegate problem" do
+    storage = Storage.new("")
+    storage.should_receive(:ouch!).and_raise(Problem.new)
+    proc {DataBrander.new(storage).dont_do_this}.should raise_error(Problem)
+  end
 end
