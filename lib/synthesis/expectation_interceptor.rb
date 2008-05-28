@@ -14,7 +14,7 @@ module Synthesis
         define_method(:get_invoke_method_name) {method_name}
         
         def temp_invoke(*expected_parameters, &matching_block)
-          synthesis_expectation.test_subject = caller(1)[0] if synthesis_expectation
+          synthesis_expectation.test_subject = caller(2) if synthesis_expectation
           send("intercepted_#{get_invoke_method_name}", *expected_parameters, &matching_block)
         end
           
@@ -68,8 +68,12 @@ module Synthesis
         alias_method invoke_method, "intercepted_#{invoke_method}" if invoke_method
         alias_method with_method, "intercepted_#{with_method}"
         alias_method returns_method, "intercepted_#{returns_method}"
-        remove_method "intercepted_#{invoke_method}" if invoke_method
+        if invoke_method
+          remove_method "intercepted_#{invoke_method}"
+          remove_method :get_invoke_method_name
+        end
         remove_method "intercepted_#{with_method}"
+        remove_method :get_method_name
         remove_method "intercepted_#{returns_method}"
         remove_method :synthesis_expectation
         remove_method :synthesis_expectation=
