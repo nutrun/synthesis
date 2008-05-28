@@ -6,7 +6,7 @@ module Synthesis
     # Intercept the actual mock proxy to record the test subject so that
     # Synthesis can track which object is being tested
     def record_test_subject_on(method_name)
-      @original_invoke = method_name
+      (@original_methods ||= []) << method_name
       
       class_eval do
         alias_method "intercepted_#{method_name}", method_name
@@ -26,7 +26,7 @@ module Synthesis
     # Intercept the mock object framework's expectation method for declaring a mocked
     # method's arguments so that Synthesis can record them.
     def record_expected_argument_types_on(method_name)
-      @original_with = method_name
+      (@original_methods ||= []) << method_name
       
       class_eval do
         alias_method "intercepted_#{method_name}", method_name
@@ -46,7 +46,7 @@ module Synthesis
     # Intercept the mock object framework's expectation method for declaring a mocked
     # method's return values so that Synthesis can record them.
     def record_expected_return_values_on(method_name)
-      @original_returns = method_name
+      (@original_methods ||= []) << method_name
       
       class_eval do
         alias_method "intercepted_#{method_name}", method_name
@@ -63,20 +63,18 @@ module Synthesis
     # undefine their intercepted counterparts. Undefine the synthesis_expectation
     # accessors.
     def stop_intercepting!
-      invoke_method, with_method, returns_method = @original_invoke, @original_with, @original_returns
-      class_eval do
-        alias_method invoke_method, "intercepted_#{invoke_method}" if invoke_method
-        alias_method with_method, "intercepted_#{with_method}"
-        alias_method returns_method, "intercepted_#{returns_method}"
-        if invoke_method
-          remove_method "intercepted_#{invoke_method}"
-          remove_method :get_invoke_method_name
+      @original_methods.each do |m|
+        class_eval do
+          alias_method m, "intercepted_#{m}"
+          remove_method "intercepted_#{m}"
         end
-        remove_method "intercepted_#{with_method}"
-        remove_method :get_method_name
-        remove_method "intercepted_#{returns_method}"
+      end
+
+      class_eval do
         remove_method :synthesis_expectation
         remove_method :synthesis_expectation=
+        remove_method :get_invoke_method_name if method_defined?(:get_invoke_method_name)
+        remove_method :get_method_name if method_defined?(:get_method_name)
       end
     end
     

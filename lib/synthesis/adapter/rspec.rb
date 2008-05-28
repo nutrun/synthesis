@@ -23,6 +23,7 @@ module Synthesis
       Spec::Mocks::MessageExpectation.record_test_subject_on(:invoke)
       Spec::Mocks::MessageExpectation.record_expected_argument_types_on(:with)
       Spec::Mocks::MessageExpectation.record_expected_return_values_on(:and_return)
+      Spec::Mocks::MessageExpectation.record_expected_return_values_on(:and_raise)
     end
     
     def stop_collecting_expectations
