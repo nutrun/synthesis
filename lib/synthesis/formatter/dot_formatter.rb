@@ -1,3 +1,8 @@
+require 'rubygems'
+require 'parse_tree'
+require 'sexp'
+require File.dirname(__FILE__) + '/dot_processor'
+
 module Synthesis
   class DotFormatter < Formatter
     def format_digraph
@@ -51,7 +56,21 @@ module Synthesis
     # end
     # 
     def plot_expectation(expectation)
-      test_subject = expectation.test_subject ? expectation.test_subject[1].split(':')[0] : '?'
+      if expectation.test_subject
+        filename, line, method = expectation.test_subject[1].split(':')
+        begin
+          method = method.scan(/`(.*)'/)[0][0]
+          ruby = File.read(filename)
+          parser = ParseTree.new
+          sexp = parser.parse_tree_for_string(ruby, filename).first
+          sexp = Sexp.from_array sexp
+          test_subject = DotProcessor.process(sexp, method)
+        rescue
+          test_subject = filename
+        end
+      else
+        test_subject = "?"
+      end
       puts "  \"#{test_subject}\" -> \"#{expectation.receiver_class}\" [ label = \"#{label_for(expectation)}\" ];"
     end
   end
