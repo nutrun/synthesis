@@ -41,6 +41,12 @@ Synthesis::Task.new do |t|
   # t.out = File.new('synthesis.test.txt', 'a')
 end
 
+Synthesis::Task.new('synthesis:test:graph') do |t|
+  t.adapter = :rspec
+  t.pattern = 'test_project/rspec/*_spec.rb'
+  t.formatter = :dot
+end
+
 desc 'Generate RDoc'
 Rake::RDocTask.new do |task|
   task.main = 'README'
