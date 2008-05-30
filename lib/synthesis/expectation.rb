@@ -52,7 +52,7 @@ module Synthesis
       end
       
       def return_value_type
-        @return_values[0].class
+        @return_values[0] ? @return_values[0].class : nil
       end
       
       def add_return_values(*vals)
@@ -99,7 +99,7 @@ module Synthesis
       end
       
       def to_s
-        "(#{return_value_type} #{meta_receiver.name}.new.#{@method}) " +
+        "(#{return_value_type}) #{meta_receiver.name}.new.#{@method}" +
         "(#{@args.map { |arg| arg.class } * ', '})" + 
         "in #{@track}"
       end

@@ -15,9 +15,14 @@ module Synthesis
         alias_method "__recordable__#{meth}".intern, meth
         class_eval <<-end_eval
           def #{meth}(*args, &block)
-            return_value = send("__recordable__#{meth}", *args, &block)
-            MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
-            return_value
+            begin
+              return_value = send("__recordable__#{meth}", *args, &block)
+              MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
+              return_value
+            rescue Exception => e
+              MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [e])
+              raise e
+            end
           end
         end_eval
       end
@@ -26,9 +31,14 @@ module Synthesis
     def magic_recordable_method(meth)
       class_eval <<-end_eval
         def #{meth}(*args)
-          return_value = method_missing(:#{meth}, *args)
-          MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
-          return_value
+          begin
+            return_value = method_missing(:#{meth}, *args)
+            MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [return_value])
+            return_value
+          rescue Exception => e
+            MethodInvocationWatcher.invoked(self, "#{meth}".intern, args, [e])
+            raise e
+          end
         end
 
         def __recordable__#{meth}() raise "Don't ever call me" end

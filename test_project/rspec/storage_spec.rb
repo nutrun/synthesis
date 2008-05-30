@@ -10,4 +10,8 @@ describe Storage do
       FileUtils.rm_f('test.txt')
     end
   end
+  
+  it "should raise problem on ouch!" do
+    proc { Storage.new("").ouch! }.should raise_error(Problem)
+  end
 end
