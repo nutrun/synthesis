@@ -23,6 +23,7 @@ module Synthesis
         if @return_values.size > 1
           @return_values.map do |v|
             expectation = self.class.new(@receiver, @method, @track, @args, [])
+            expectation.test_subject = test_subject
             expectation.add_return_values(v)
             expectation
           end

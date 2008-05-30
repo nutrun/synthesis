@@ -17,7 +17,6 @@ module Synthesis
       super
       self.strict = false
       self.auto_shift_type = true
-      @current_class = nil
       @ancestors = []
     end
     
