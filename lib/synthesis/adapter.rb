@@ -15,7 +15,7 @@ module Synthesis
     def fail_unless(&block)
       log "Collecting expectations..."
       collect_expectations
-      Dir[@pattern].each { |t| require t }
+      Dir[*@pattern].each { |t| require t }
       exit -1 unless yield
       log "Verifying expectation invocations..."
       stop_collecting_expectations
