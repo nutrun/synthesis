@@ -7,10 +7,10 @@ module Synthesis
     def format_digraph
       format_header
       puts "  edge [color = green]"
-      ExpectationRecord.tested_expectations.each { |exp| exp.to_report  }
+      ExpectationRecord.tested_expectations.each { |exp| puts exp.to_report  }
       puts
       puts "  edge [color = red]"
-      ExpectationRecord.untested_expectations.each  { |exp| exp.to_report  }
+      ExpectationRecord.untested_expectations.each  { |exp| puts exp.to_report  }
       format_footer
     end
     alias format_failure format_digraph
