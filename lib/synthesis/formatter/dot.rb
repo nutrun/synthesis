@@ -43,7 +43,7 @@ module Synthesis
         sexp = Sexp.from_array(sexp)
         return DotProcessor.process(sexp, method)
       rescue
-        return filename
+        return "#{filename} (#{line})"
       end
 
       class DotProcessor < SexpProcessor
