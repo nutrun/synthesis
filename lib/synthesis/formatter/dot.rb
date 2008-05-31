@@ -89,9 +89,7 @@ module Synthesis
 
         def process_defn(exp)
           name = exp.shift
-          if name == method.to_sym
-            @klazz = @ancestors * '::'
-          end
+          @klazz = @ancestors * '::' if name == method.to_sym
           s(:defn, name, process(exp.shift), process(exp.shift))
         end
       end
