@@ -2,7 +2,7 @@ module Synthesis
   class Reporter
     def self.report
       formatter = Formatter.load
-      if ExpectationRecord.untested_expectations.any?
+      if ExpectationRecord.has_untested_expectations?
         formatter.format_failure
         return -1
       end

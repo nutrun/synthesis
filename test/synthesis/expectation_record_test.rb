@@ -68,5 +68,10 @@ module Synthesis
       ExpectationRecord.record_invocations
       ExpectationRecord.expectations.each { |val| assert(!val.is_a?(Array)) }
     end
+    
+    def test_fails_when_untested_expectations
+      ExpectationRecord.add_expectation(Hash, :foo, :track)
+      assert(ExpectationRecord.has_untested_expectations?)
+    end
   end
 end

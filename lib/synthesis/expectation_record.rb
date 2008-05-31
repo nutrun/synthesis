@@ -48,6 +48,10 @@ module Synthesis
       def untested_expectations
         expectations.select { |e| !e.invoked? }
       end
+      
+      def has_untested_expectations?
+        untested_expectations.any?
+      end
 
       private
       def expectations_hash
