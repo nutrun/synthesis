@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + "/helper"
 
 module Synthesis
   class FormatterTest < Test::Unit::TestCase
-    def test_loads_plain_formatter
-      require File.dirname(__FILE__) + "/../../lib/synthesis/formatter/plain"
-      assert_kind_of(Synthesis::PlainFormatter, Formatter.load)
+    def test_loads_text_formatter
+      require File.dirname(__FILE__) + "/../../lib/synthesis/formatter/text"
+      assert_kind_of(Synthesis::TextFormatter, Formatter.load)
     end
     
     def test_loads_dot_formatter

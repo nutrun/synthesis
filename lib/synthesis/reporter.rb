@@ -1,6 +1,6 @@
 module Synthesis
   class Reporter
-    def report
+    def self.report
       formatter = Formatter.load
       if ExpectationRecord.untested_expectations.any?
         formatter.format_failure

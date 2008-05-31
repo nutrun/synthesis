@@ -14,7 +14,7 @@ module Synthesis
       @pattern ||= 'test/**/*.rb'
       @ruby_opts ||= []
       @adapter ||= :mocha
-      @formatter ||= :plain
+      @formatter ||= :text
       define
     end
     
