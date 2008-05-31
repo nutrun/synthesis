@@ -10,7 +10,7 @@ class StorageTest < Test::Unit::TestCase
     FileUtils.rm_f('test.txt')
   end
   
-  # def test_ouch_raises_problem
-  #   assert_raise(Problem) { Storage.new("").ouch! }
-  # end
+  def test_ouch_raises_problem
+    assert_raise(Problem) { Storage.new("").ouch! }
+  end
 end
