@@ -38,6 +38,8 @@ module Synthesis
       private
     
       def test_subject_name
+        #FIXME: This if test_subject, rescue, blah business should not be needed.
+        #FIXME: test_subject must always be present and parsable by ParseTree 
         if test_subject
           filename, line, method = test_subject[1].split(':')
           begin
