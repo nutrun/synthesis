@@ -41,7 +41,12 @@ Synthesis::Task.new do |t|
   # t.out = File.new('synthesis.test.txt', 'a')
 end
 
-Synthesis::Task.new('synthesis:test:graph') do |t|
+Synthesis::Task.new('synthesis:graph') do |t|
+  t.pattern = 'test_project/mocha/test/*_test.rb'
+  t.formatter = :dot
+end
+
+Synthesis::Task.new('synthesis:rspec:graph') do |t|
   t.adapter = :rspec
   t.pattern = 'test_project/rspec/*_spec.rb'
   t.formatter = :dot
@@ -68,7 +73,7 @@ gem_spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.rubyforge_project = "synthesis"
   s.summary, s.description = 'A tool for Synthesized Testing'
-  s.authors = 'Stuart Caborn, George Malamidis'
+  s.authors = 'Stuart Caborn, George Malamidis, Danilo Sato'
   s.email = 'george@nutrun.com'
   s.homepage = 'http://synthesis.rubyforge.org'
   s.has_rdoc = true
