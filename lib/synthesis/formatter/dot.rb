@@ -30,9 +30,7 @@ module Synthesis
       def to_report
         "  \"#{test_subject_name}\" -> " +
         "\"#{receiver_class}\" " +
-        "[ label = " +
-        "\"(#{return_value_type}) " +
-        "#{method}(#{args.map { |arg| arg.class } * ', '})\" ];"
+        "[ label = \"(#{return_value_type}) #{method}(#{arg_types * ', '})\" ];"
       end
           
       private
