@@ -8,7 +8,7 @@ module Synthesis
       Expectation::Expectation.send(:include, ExpectationReportFormat::Dot)
     end
     
-    def graph
+    def digraph
       puts "digraph synthesis_expectations {"
       puts "  rankdir=LR;"
       puts "  size=\"8,10\";"
@@ -21,8 +21,8 @@ module Synthesis
       ExpectationRecord.untested_expectations.each  { |exp| puts exp.to_report  }
       puts "}"
     end
-    alias format_failure graph
-    alias format_success graph
+    alias format_failure digraph
+    alias format_success digraph
   end
   
   module ExpectationReportFormat
