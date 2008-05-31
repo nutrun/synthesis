@@ -20,4 +20,15 @@ module Synthesis
       log; log "FAILED."
     end
   end
+  
+  module ExpectationReportFormat
+    module Text
+      def to_report
+        "(#{return_value_type}) " +
+        "#{receiver_repr}.#{@method}" + 
+        "(#{@args.map { |arg| arg.class } * ', '}) " + 
+        "in #{@track}"
+      end
+    end
+  end
 end
