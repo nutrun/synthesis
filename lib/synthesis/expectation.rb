@@ -81,13 +81,7 @@ module Synthesis
       
       def receiver_repr
         @receiver.name
-      end
-      
-      def to_s
-        "(#{return_value_type}) " +
-        "#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '})" + 
-        "in #{@track}"
-      end
+      end      
     end
     
     class Instance < Expectation
@@ -105,13 +99,7 @@ module Synthesis
       
       def receiver_repr
         "#{meta_receiver.name}.new"
-      end
-      
-      def to_s
-        "(#{return_value_type}) #{meta_receiver.name}.new.#{@method}" +
-        "(#{@args.map { |arg| arg.class } * ', '})" + 
-        "in #{@track}"
-      end
+      end      
     end
     
     class NilExpectation < Expectation
