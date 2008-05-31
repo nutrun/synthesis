@@ -49,19 +49,19 @@ module Synthesis
         expectations.select { |e| !e.invoked? }
       end
 
-      def print_tested_expectations
-        log; log "Tested Expectations: "
-        tested_expectations.each { |e| log e }
-      end
-
-      def print_untested_expectations
-        log; log "Untested Expectations: "
-        untested_expectations.each { |e| log e }
-      end
-
-      def print_ignored
-        log; log "Ignoring: #{ignored.to_a * ', '}"
-      end
+      # def print_tested_expectations
+      #   log; log "Tested Expectations: "
+      #   tested_expectations.each { |e| log e }
+      # end
+      # 
+      # def print_untested_expectations
+      #   log; log "Untested Expectations: "
+      #   untested_expectations.each { |e| log e }
+      # end
+      # 
+      # def print_ignored
+      #   log; log "Ignoring: #{ignored.to_a * ', '}"
+      # end
 
       private
       def expectations_hash
