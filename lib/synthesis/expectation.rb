@@ -79,6 +79,10 @@ module Synthesis
         @receiver
       end
       
+      def receiver_repr
+        @receiver.name
+      end
+      
       def to_s
         "(#{return_value_type}) " +
         "#{@receiver.name}.#{@method}(#{@args.map { |arg| arg.class } * ', '})" + 
@@ -97,6 +101,10 @@ module Synthesis
       
       def receiver_class
         meta_receiver
+      end
+      
+      def receiver_repr
+        "#{meta_receiver.name}.new"
       end
       
       def to_s
