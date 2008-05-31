@@ -13,9 +13,9 @@ module Synthesis
 
     def format_failure
       log; log "Tested Expectations: "
-      ExpectationRecord.tested_expectations.each { |e| log e.to_report }
+      report_tested_expectations
       log; log "Untested Expectations: "
-      ExpectationRecord.untested_expectations.each { |e| log e.to_report }
+      report_untested_expectations
       log "Ignoring: #{ExpectationRecord.ignored.to_a * ', '}"
       log; log "FAILED."
     end

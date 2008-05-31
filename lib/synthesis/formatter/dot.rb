@@ -15,10 +15,10 @@ module Synthesis
       puts "  ratio=\"fill\";"
       puts "  node [shape = circle];"
       puts "  edge [color = green]"
-      ExpectationRecord.tested_expectations.each { |exp| puts exp.to_report  }
+      report_tested_expectations
       puts
       puts "  edge [color = red]"
-      ExpectationRecord.untested_expectations.each  { |exp| puts exp.to_report  }
+      report_untested_expectations
       puts "}"
     end
     alias format_failure digraph
