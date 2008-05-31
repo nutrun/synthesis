@@ -1,19 +1,13 @@
 module Synthesis
   class Reporter
-    class << self
-      def report
-        formatter = Formatter.load
-        if failed?
-          formatter.format_failure
-          return -1
-        end
-        formatter.format_success
-        0
+    def report
+      formatter = Formatter.load
+      if ExpectationRecord.untested_expectations.any?
+        formatter.format_failure
+        return -1
       end
-
-      def failed?
-        ExpectationRecord.untested_expectations.any?
-      end
+      formatter.format_success
+      0
     end
   end
 end
