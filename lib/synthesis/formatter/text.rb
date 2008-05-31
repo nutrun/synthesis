@@ -26,7 +26,7 @@ module Synthesis
       def to_report
         "(#{return_value_type}) " +
         "#{receiver_repr}.#{@method}" + 
-        "(#{@args.map { |arg| arg.class } * ', '}) " + 
+        "(#{arg_types * ', '}) " + 
         "in #{@track}"
       end
     end
