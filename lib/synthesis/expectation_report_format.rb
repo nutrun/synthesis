@@ -44,15 +44,15 @@ module Synthesis
       end
 
       class DotProcessor < SexpProcessor
+        attr_accessor :method
+        attr_reader :klazz
+
         def self.process(exp, method)
           analyzer = self.new
           analyzer.method = method
           analyzer.process(exp)
           analyzer.klazz
         end
-
-        attr_accessor :method
-        attr_reader :klazz
 
         def initialize
           super
