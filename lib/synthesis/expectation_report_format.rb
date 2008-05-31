@@ -16,7 +16,7 @@ module Synthesis
       require "sexp_processor"
       
       def to_report
-        "  \"#{discover_test_subject}\" -> " +
+        "  \"#{test_subject_name}\" -> " +
         "\"#{receiver_class}\" "+
         "[ label = "+
         "\"(#{return_value_type}) "+
@@ -25,7 +25,7 @@ module Synthesis
             
       private
       
-      def discover_test_subject
+      def test_subject_name
         if test_subject
           filename, line, method = test_subject[1].split(':')
           begin
