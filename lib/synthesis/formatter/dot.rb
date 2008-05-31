@@ -28,31 +28,22 @@ module Synthesis
   module ExpectationReportFormat
     module Dot
       def to_report
-        "  \"#{test_subject_name}\" -> " +
-        "\"#{receiver_class}\" " +
+        "  \"#{test_subject_name}\" -> \"#{receiver_class}\" " +
         "[ label = \"(#{return_value_type}) #{method}(#{arg_types * ', '})\" ];"
       end
           
       private
     
       def test_subject_name
-        #FIXME: This if test_subject, rescue, blah business should not be needed.
-        #FIXME: test_subject must always be present and parsable by ParseTree 
-        if test_subject
-          filename, line, method = test_subject[1].split(':')
-          begin
-            method = method.scan(/`(.*)'/)[0][0]
-            ruby = File.read(filename)
-            parser = ParseTree.new
-            sexp = parser.parse_tree_for_string(ruby, filename).first
-            sexp = Sexp.from_array(sexp)
-            return DotProcessor.process(sexp, method)
-          rescue
-            return filename
-          end
-        else
-          return "?"
-        end
+        filename, line, method = test_subject[1].split(':')
+        method = method.scan(/`(.*)'/)[0][0]
+        ruby = File.read(filename)
+        parser = ParseTree.new
+        sexp = parser.parse_tree_for_string(ruby, filename).first
+        sexp = Sexp.from_array(sexp)
+        return DotProcessor.process(sexp, method)
+      rescue
+        return filename
       end
 
       class DotProcessor < SexpProcessor

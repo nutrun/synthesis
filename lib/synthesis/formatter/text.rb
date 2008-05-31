@@ -24,10 +24,8 @@ module Synthesis
   module ExpectationReportFormat
     module Text
       def to_report
-        "(#{return_value_type}) " +
-        "#{receiver_repr}.#{@method}" + 
-        "(#{arg_types * ', '}) " + 
-        "in #{@track}"
+        "(#{return_value_type}) #{receiver_repr}.#{@method}" +
+        "(#{arg_types * ', '}) in #{@track}"
       end
     end
   end
