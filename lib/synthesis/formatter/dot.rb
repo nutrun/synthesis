@@ -29,9 +29,9 @@ module Synthesis
     module Dot
       def to_report
         "  \"#{test_subject_name}\" -> " +
-        "\"#{receiver_class}\" "+
-        "[ label = "+
-        "\"(#{return_value_type}) "+
+        "\"#{receiver_class}\" " +
+        "[ label = " +
+        "\"(#{return_value_type}) " +
         "#{method}(#{args.map { |arg| arg.class } * ', '})\" ];"
       end
           
