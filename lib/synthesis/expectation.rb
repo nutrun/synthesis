@@ -53,7 +53,7 @@ module Synthesis
       end
       
       def return_value_type
-        @return_values[0] ? @return_values[0].class : nil
+        @return_values[0].class
       end
       
       def add_return_values(*vals)
