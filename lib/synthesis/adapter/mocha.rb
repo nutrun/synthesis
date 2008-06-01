@@ -17,7 +17,7 @@ module Synthesis
       Object.record_expectations_on(:expects)
       Mocha::Expectation.extend(ExpectationInterceptor)
       Mocha::Expectation.record_test_subject_on(:invoke)
-      Mocha::Expectation.record_expected_argument_types_on(:with)
+      Mocha::Expectation.record_expected_arguments_on(:with)
       Mocha::Expectation.record_expected_return_values_on(:returns)
       Mocha::Expectation.record_expected_return_values_on(:raises)
     end

@@ -25,7 +25,7 @@ module Synthesis
     
     # Intercept the mock object framework's expectation method for declaring a mocked
     # method's arguments so that Synthesis can record them.
-    def record_expected_argument_types_on(method_name)
+    def record_expected_arguments_on(method_name)
       (@original_methods ||= []) << method_name
       
       class_eval do
