@@ -61,7 +61,7 @@ module Synthesis
       end
       
       def return_value_type
-        @return_values[0].class
+        @return_values.size == 1 ? @return_values[0].class : nil
       end
       
       def add_return_values(*vals)
