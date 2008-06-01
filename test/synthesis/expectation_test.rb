@@ -53,8 +53,10 @@ module Synthesis
     end
     
     def test_return_value_type
-      expectation = Expectation.new(String.new, :new, :track, [], [:sym])
-      assert_equal(Symbol, expectation.return_value_type)
+      assert_equal(Symbol, Expectation.new(String.new, :new, :track, [], [:sym]).return_value_type)
+      assert_equal(TrueClass, Expectation.new(String.new, :new, :track, [], [true]).return_value_type)
+      assert_equal(FalseClass, Expectation.new(String.new, :new, :track, [], [false]).return_value_type)
+      assert_equal(NilClass, Expectation.new(String.new, :new, :track, [], [nil]).return_value_type)
     end
     
     def test_adds_return_value
@@ -89,11 +91,6 @@ module Synthesis
       expectation = Expectation.new(String, :new, :track, [])
       expectation.add_return_values("rock")
       assert_equal(expectation, expectation.explode)
-    end
-    
-    def test_returns_nil_when_no_return_values_on_return_value_type
-      expectation = Expectation.new(String, :new, :track, [])
-      assert_nil(expectation.return_value_type)
-    end
+    end    
   end
 end
