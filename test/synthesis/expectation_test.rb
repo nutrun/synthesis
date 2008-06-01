@@ -40,11 +40,11 @@ module Synthesis
     end
     
     def test_singleton_receiver_class
-      assert_equal(String, Expectation.new(String, :new, :track, [], []).receiver_class)
+      assert_equal(String, Expectation.new(String, :new, :track).receiver_class)
     end
     
     def test_instance_receiver_class
-      assert_equal(String, Expectation.new(String.new, :new, :track, [], []).receiver_class)
+      assert_equal(String, Expectation.new(String.new, :new, :track).receiver_class)
     end
     
     def test_arg_types
