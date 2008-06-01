@@ -73,8 +73,8 @@ module Synthesis
       class_eval do
         remove_method :synthesis_expectation
         remove_method :synthesis_expectation=
-        remove_method :get_invoke_method_name if method_defined?(:get_invoke_method_name)
-        remove_method :get_method_name if method_defined?(:get_method_name)
+        remove_method :get_invoke_method_name
+        remove_method :get_method_name
       end
     end
     
