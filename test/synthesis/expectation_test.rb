@@ -51,12 +51,28 @@ module Synthesis
       expectation = Expectation.new(String.new, :new, :track, [:sym, "str"], [])
       assert_equal([Symbol, String], expectation.arg_types)
     end
-    
+        
     def test_return_value_type
-      assert_equal(Symbol, Expectation.new(String.new, :new, :track, [], [:sym]).return_value_type)
-      assert_equal(TrueClass, Expectation.new(String.new, :new, :track, [], [true]).return_value_type)
-      assert_equal(FalseClass, Expectation.new(String.new, :new, :track, [], [false]).return_value_type)
-      assert_equal(NilClass, Expectation.new(String.new, :new, :track, [], [nil]).return_value_type)
+      expectation = Expectation.new(String, :new, :track)
+      expectation.add_return_values(:sym)
+      assert_equal(Symbol, expectation.return_value_type)
+    end
+    
+    def test_true_class_return_value_type
+      expectation = Expectation.new(String, :new, :track)
+      expectation.add_return_values(true)
+      assert_equal(TrueClass, expectation.return_value_type)
+    end
+    
+    def test_false_class_return_value_type
+      expectation = Expectation.new(String, :new, :track)
+      expectation.add_return_values(false)
+      assert_equal(FalseClass, expectation.return_value_type)
+    end
+    
+    def test_returns_nil_return_value_type_when_no_return_values
+      expectation = Expectation.new(String, :new, :track)
+      assert_nil(expectation.return_value_type)
     end
     
     def test_adds_return_value

@@ -25,20 +25,20 @@ Rake::TestTask.new('test:spec') do |t|
   t.pattern = 'test/synthesis/adapter/rspec/*_test.rb'
 end
 
-Synthesis::Task.new('synthesis:test:expectations') do |t|
-  t.adapter = :expectations
-  t.pattern = 'test_project/expectations/test/*_test.rb'
-end
-
-Synthesis::Task.new('synthesis:test:rspec') do |t|
-  t.adapter = :rspec
-  t.pattern = 'test_project/rspec/*_spec.rb'
-end
-
 Synthesis::Task.new do |t|
   t.pattern = 'test_project/mocha/test/*_test.rb'
   t.ignored = [Array, Hash]
   # t.out = File.new('synthesis.test.txt', 'a')
+end
+
+Synthesis::Task.new('synthesis:expectations') do |t|
+  t.adapter = :expectations
+  t.pattern = 'test_project/expectations/test/*_test.rb'
+end
+
+Synthesis::Task.new('synthesis:spec') do |t|
+  t.adapter = :rspec
+  t.pattern = 'test_project/rspec/*_spec.rb'
 end
 
 desc 'Generate RDoc'
