@@ -7,7 +7,7 @@ module Synthesis
     class Expectation
       include Logging
       attr_reader :receiver, :method
-      attr_accessor :args, :test_subject
+      attr_accessor :args
       
       def initialize(receiver, method, track, args, return_values)
         @receiver, @method, @track, @args = receiver, method, track, args
@@ -19,11 +19,19 @@ module Synthesis
         meta_receiver.recordable_method(@method)
       end
       
+      def add_test_subject(test_subject)
+        (@callers ||= []) << test_subject
+      end
+      
+      def test_subject
+        @callers[0]
+      end
+      
       def explode
         if @return_values.size > 1
           @return_values.map do |v|
             expectation = self.class.new(@receiver, @method, @track, @args, [])
-            expectation.test_subject = test_subject
+            expectation.add_test_subject @callers.shift
             expectation.add_return_values(v)
             expectation
           end

@@ -13,8 +13,8 @@ module Synthesis
       expectation = Expectation.new(Array, :foo, :track, [:arg], [:retval])
       expectation.extend(ExpectationReportFormat::Dot)
       filename = File.dirname(__FILE__) + "/../../../lib/synthesis/logging.rb"
-      test_subject = ['dontcare', "#{filename}:14:`log'"]
-      expectation.test_subject = test_subject
+      test_subject = ['dontcare', "#{filename}:14: in `log'"]
+      expectation.add_test_subject test_subject
       expected = "  \"Synthesis::Logging\" -> \"Array\" [ label = \"(Symbol) foo(Symbol)\" ];"
       assert_equal(expected, expectation.to_report)
     end
