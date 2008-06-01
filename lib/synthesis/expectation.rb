@@ -31,7 +31,7 @@ module Synthesis
         if @return_values.size > 1
           @return_values.map do |v|
             expectation = self.class.new(@receiver, @method, @track, @args, [])
-            expectation.add_test_subject @callers.shift
+            expectation.add_test_subject(@callers.shift)
             expectation.add_return_values(v)
             expectation
           end

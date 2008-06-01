@@ -65,6 +65,7 @@ module Synthesis
     def test_flattens_expectations_before_recording_invocations
       expectation = ExpectationRecord.add_expectation(Hash, :foo, :track)
       expectation.add_return_values(1, "str", "sym")
+      expectation.add_test_subject(:doesntmatter)
       ExpectationRecord.record_invocations
       ExpectationRecord.expectations.each { |val| assert(!val.is_a?(Array)) }
     end

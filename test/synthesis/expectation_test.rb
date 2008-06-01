@@ -80,6 +80,7 @@ module Synthesis
     def test_explodes_to_new_expectations_for_each_return_value
       expectation = Expectation.new(String, :new, :track, [])
       expectation.add_return_values(:sym, "str")
+      expectation.add_test_subject(:doesntmatter)
       expected = [
         Expectation.new(String, :new, :track, [], [:sym]),
         Expectation.new(String, :new, :track, [], ["str"])
