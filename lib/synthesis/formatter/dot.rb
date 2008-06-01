@@ -66,14 +66,18 @@ module Synthesis
 
         def process_module(exp)
           name = exp.shift
-          @ancestors << name
-          s(:module, name, process(exp.shift))
+          @ancestors.push name
+          result = s(:module, name, process(exp.shift))
+          @ancestors.pop
+          result
         end
 
         def process_class(exp)
           name = exp.shift
-          @ancestors << name
-          s(:class, name, exp.shift, process(exp.shift))
+          @ancestors.push name
+          result = s(:class, name, exp.shift, process(exp.shift))
+          @ancestors.pop
+          result
         end
 
         def process_defn(exp)
