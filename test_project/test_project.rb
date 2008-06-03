@@ -12,6 +12,14 @@ class DataBrander
   def dont_do_this
     @storage.ouch!
   end
+  
+  def ok
+    @storage.ok_or_problem(:ok)
+  end
+  
+  def not_ok
+    @storage.ok_or_problem(:not_ok)
+  end
 end
 
 class Storage
@@ -25,6 +33,10 @@ class Storage
   
   def ouch!
     raise Problem
+  end
+  
+  def ok_or_problem(ok)
+    ok == :ok ? ok : raise(Problem)
   end
 end
 

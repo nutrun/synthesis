@@ -14,4 +14,12 @@ describe Storage do
   it "should raise problem on ouch!" do
     proc { Storage.new("").ouch! }.should raise_error(Problem)
   end
+  
+  it "should return :ok when given :ok" do
+    Storage.new("").ok_or_problem(:ok).should == :ok
+  end
+  
+  it "should raise problem when not give :ok" do
+    proc { Storage.new("").ok_or_problem(:not_ok) }.should raise_error(Problem)
+  end
 end

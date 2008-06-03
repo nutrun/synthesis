@@ -109,7 +109,7 @@ module Synthesis
       expectation.add_return_values("rock")
       assert_equal(expectation, expectation.explode)
     end
-    
+
     def test_singleton_expectation_receiver_repr
       expectation = Expectation.new(String, :new, :track, [])
       assert_equal("String", expectation.receiver_repr)
@@ -118,6 +118,13 @@ module Synthesis
     def test_instance_expectation_receiver_repr
       expectation = Expectation.new(String.new, :new, :track, [])
       assert_equal("String.new", expectation.receiver_repr)
+
+    def test_expectation_sorting
+      light = Expectation.new(Object.new, :bar, :track, [])
+      heavy = Expectation.new(Object.new, :foo, :track, [], [:retval])
+      sorted = [light, heavy].sort.reverse
+      assert_equal(heavy, sorted[0])
+      assert_equal(light, sorted[1])
     end
   end
 end
