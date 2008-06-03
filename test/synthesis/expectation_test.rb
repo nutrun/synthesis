@@ -118,6 +118,7 @@ module Synthesis
     def test_instance_expectation_receiver_repr
       expectation = Expectation.new(String.new, :new, :track, [])
       assert_equal("String.new", expectation.receiver_repr)
+    end
 
     def test_expectation_sorting
       light = Expectation.new(Object.new, :bar, :track, [])
