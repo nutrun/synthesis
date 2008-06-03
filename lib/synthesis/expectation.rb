@@ -6,7 +6,8 @@ module Synthesis
   
     class Expectation
       include Logging
-      attr_reader :receiver, :method
+      attr_reader :receiver, :method, :return_values
+      protected :return_values
       attr_accessor :args
       
       def initialize(receiver, method, track, args, return_values)
@@ -37,6 +38,10 @@ module Synthesis
       
       def ==(other)
         eql?(other)
+      end
+      
+      def <=>(other)
+        @return_values.size <=> other.return_values.size
       end
       
       def invoked?

@@ -107,6 +107,14 @@ module Synthesis
       expectation = Expectation.new(String, :new, :track, [])
       expectation.add_return_values("rock")
       assert_equal(expectation, expectation.explode)
-    end    
+    end
+    
+    def test_expectation_sorting
+      light = Expectation.new(Object.new, :bar, :track, [])
+      heavy = Expectation.new(Object.new, :foo, :track, [], [:retval])
+      sorted = [light, heavy].sort.reverse
+      assert_equal(heavy, sorted[0])
+      assert_equal(light, sorted[1])
+    end
   end
 end

@@ -65,7 +65,7 @@ module Synthesis
 
       private
       def expectations_hash
-        @expectations_hash ||= expectations.inject({}) do |hash, expectation|
+        @expectations_hash ||= expectations.sort.inject({}) do |hash, expectation|
           hash[expectation] = expectation
           hash
         end
