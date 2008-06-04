@@ -47,6 +47,12 @@ module Synthesis
       assert(ExpectationRecord.expectations.empty?)
     end
     
+    def test_does_not_add_expectation_for_ignored_module
+      ExpectationRecord.ignore(Enumerable)
+      ExpectationRecord.add_expectation(Enumerable, :foo, :track)
+      assert(ExpectationRecord.expectations.empty?)
+    end
+    
     def test_returns_added_expectation_on_add
       expected = Expectation.new(Hash, :foo, :track, [], [:return_val])
       actual = ExpectationRecord.add_expectation(Hash, :foo, :track)
