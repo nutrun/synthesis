@@ -21,9 +21,11 @@ module Synthesis
     end
 
     def test_finds_expectation
-      expected = ExpectationRecord.add_expectation(Object.new, :foo, :track)
+      c = Class.new { def foo; end }
+      expected = ExpectationRecord.add_expectation(c.new, :foo, :track)
       expected.add_return_values(20)
-      matcher = Expectation.new(Object.new, :foo, :track, [], [20])
+      ExpectationRecord.record_invocations
+      matcher = Expectation.new(c.new, :foo, :track, [], [20])
       actual = ExpectationRecord[matcher]
       assert_equal(expected, actual)
     end
@@ -61,15 +63,17 @@ module Synthesis
     end
     
     def test_uniqs_expectations_before_recording_invocations
-      ExpectationRecord.add_expectation(Hash, :foo, :track)
-      ExpectationRecord.add_expectation(Hash, :foo, :track)
+      c = Class.new { def foo; end }
+      ExpectationRecord.add_expectation(c, :foo, :track)
+      ExpectationRecord.add_expectation(c, :foo, :track)
       assert_equal(2, ExpectationRecord.expectations.size)
       ExpectationRecord.record_invocations
       assert_equal(1, ExpectationRecord.expectations.size)
     end
     
     def test_flattens_expectations_before_recording_invocations
-      expectation = ExpectationRecord.add_expectation(Hash, :foo, :track)
+      c = Class.new { def foo; end }
+      expectation = ExpectationRecord.add_expectation(c, :foo, :track)
       expectation.add_return_values(1, "str", "sym")
       expectation.add_test_subject(:doesntmatter)
       ExpectationRecord.record_invocations
