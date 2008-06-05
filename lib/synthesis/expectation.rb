@@ -40,10 +40,6 @@ module Synthesis
         eql?(other)
       end
       
-      def <=>(other)
-        @return_values.size <=> other.return_values.size
-      end
-      
       def invoked?
         @invoked
       end

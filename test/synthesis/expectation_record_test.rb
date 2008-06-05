@@ -7,7 +7,7 @@ module Synthesis
     end
 
     def test_adds_expectation
-      ExpectationRecord.add_expectation Object.new, :to_s, :track
+      ExpectationRecord.add_expectation(Object.new, :to_s, :track)
       assert_equal(1, ExpectationRecord.expectations.size)
     end
 
@@ -31,8 +31,8 @@ module Synthesis
     end
 
     def test_returns_nil_expectation_on_no_expectation_found
-      ExpectationRecord.add_expectation Object.new, :foo, :track
-      matcher = Expectation.new Object.new, :bar, :track
+      ExpectationRecord.add_expectation(Object.new, :foo, :track)
+      matcher = Expectation.new(Object.new, :bar, :track)
       actual_instance = ExpectationRecord[matcher]
       assert_kind_of(Expectation::NilExpectation, actual_instance)
     end
