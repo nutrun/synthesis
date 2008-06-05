@@ -31,14 +31,21 @@ module Synthesis
       def [](matcher)
         # Using a hash for faster look up of expectations 
         # when recording invocations
-        expectations_hash[matcher] || Expectation::NilExpectation.new
+        expectations_with_return[matcher] || expectations_without_return[matcher] || Expectation::NilExpectation.new
       end
 
       def record_invocations
         expectations.map! { |e| e.explode }
         expectations.flatten!
         expectations.uniq!
-        expectations.each { |e| e.record_invocations }
+        expectations.each do |e|
+          e.record_invocations
+          if e.return_values_defined?
+            expectations_with_return[e] = e 
+          else
+            expectations_without_return[e] = e
+          end
+        end
       end
 
       def tested_expectations
@@ -64,11 +71,12 @@ module Synthesis
       end
 
       private
-      def expectations_hash
-        @expectations_hash ||= expectations.sort.inject({}) do |hash, expectation|
-          hash[expectation] = expectation
-          hash
-        end
+      def expectations_with_return
+        @expectations_with_return ||= {}
+      end
+
+      def expectations_without_return
+        @expectations_without_return ||= {}
       end
 
       def ignore?(obj)
@@ -79,7 +87,7 @@ module Synthesis
       end
 
       def reset!
-        @expectations_hash, @expectations, @ignored = nil
+        @expectations_with_return, @expectations_without_return, @expectations, @ignored = nil
       end
     end
   end

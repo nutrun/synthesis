@@ -7,8 +7,10 @@ module Synthesis
     end
 
     def test_marks_expectation_invoked
-      ExpectationRecord.add_expectation(Hash, :to_s, :track, []).add_return_values(1)
-      MethodInvocationWatcher.invoked(Hash, :to_s, [], [1])
+      c = Class.new { def foo; end }
+      ExpectationRecord.add_expectation(c, :to_s, :track, []).add_return_values(1)
+      ExpectationRecord.record_invocations
+      MethodInvocationWatcher.invoked(c, :to_s, [], [1])
       expectation = ExpectationRecord.expectations.to_a.first
       assert(expectation.invoked?)
     end
