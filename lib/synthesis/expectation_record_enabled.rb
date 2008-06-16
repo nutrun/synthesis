@@ -11,12 +11,17 @@ module Synthesis
       class_eval do
         alias_method "intercepted_#{method_name}", method_name
 
-        define_method(method_name) do |meth|
+        define_method(:get_expectation_method_name) {method_name}
+
+        def temp_expectation_record(meth, *expected_parameters, &matching_block)
           s_expectation = ExpectationRecord.add_expectation(self, meth, caller[0])
-          m_expectation = send("intercepted_#{method_name}", meth)
+          m_expectation = send("intercepted_#{get_expectation_method_name}", meth, *expected_parameters, &matching_block)
           m_expectation.synthesis_expectation = s_expectation
           m_expectation
         end
+          
+        alias_method method_name, :temp_expectation_record
+        undef temp_expectation_record
       end
     end
     
@@ -27,6 +32,7 @@ module Synthesis
       class_eval do
         alias_method method_name, "intercepted_#{method_name}"
         remove_method "intercepted_#{method_name}"
+        remove_method :get_expectation_method_name
       end
     end
   end
