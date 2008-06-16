@@ -4,7 +4,7 @@ module Synthesis
       require "synthesis/adapter/#{adapter}"
       require "synthesis/formatter/#{formatter}"
       Adapter.load(pattern).run
-      exit Reporter.report unless $!
+      at_exit { Reporter.report unless $! }
     end    
   end
 end
