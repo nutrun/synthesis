@@ -11,7 +11,7 @@ module Synthesis
     def initialize(name='synthesis:test')
       @name, @ignored = name, []
       yield self if block_given?
-      @pattern ||= 'test/**/*.rb'
+      @pattern ||= 'test/**/*_test.rb'
       @ruby_opts ||= []
       @adapter ||= :mocha
       @formatter ||= :text
