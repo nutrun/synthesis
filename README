@@ -32,7 +32,7 @@ By default, Synthesis outputs to +STDOUT+, but output can be redirected to alter
 
 Synthesis can be setup to ignore certain classes or modules when collecting expectations for verification.
 
-If +pattern+ is not specified, it will default to <tt>test/**/*.rb</tt>
+If +pattern+ is not specified, it will default to <tt>test/**/*_test.rb</tt>
 
 == Usage examples
 
