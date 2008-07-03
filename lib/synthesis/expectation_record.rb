@@ -10,6 +10,10 @@ module Synthesis
           expectation
         end
       end
+      
+      def remove(expectation)
+        expectations.delete(expectation)
+      end
 
       def ignore(*args)
         ignored.merge(args)

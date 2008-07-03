@@ -59,6 +59,19 @@ module Synthesis
       end
     end
     
+    def remove_expectation_on(method_name)
+      (@original_methods ||= []) << method_name
+      
+      class_eval do
+        alias_method "intercepted_#{method_name}", method_name
+        
+        define_method(method_name) do |*values|
+          Synthesis::ExpectationRecord.remove(synthesis_expectation) if synthesis_expectation
+          send("intercepted_#{method_name}")
+        end
+      end
+    end
+    
     # Restore the original methods ExpectationInterceptor has rewritten and
     # undefine their intercepted counterparts. Undefine the synthesis_expectation
     # accessors.

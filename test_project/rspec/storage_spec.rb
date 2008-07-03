@@ -22,4 +22,9 @@ describe Storage do
   it "should raise problem when not give :ok" do
     proc { Storage.new("").ok_or_problem(:not_ok) }.should raise_error(Problem)
   end
+  
+  it "should never call" do
+    storage = Storage.new("")
+    storage.should_receive(:never_call_me).never
+  end
 end

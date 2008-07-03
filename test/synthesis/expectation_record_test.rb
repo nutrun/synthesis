@@ -84,5 +84,12 @@ module Synthesis
       ExpectationRecord.add_expectation(Hash, :foo, :track)
       assert(ExpectationRecord.has_untested_expectations?)
     end
+    
+    def test_removes_expectation
+      c = Class.new { def foo; end }
+      expectation = ExpectationRecord.add_expectation(c, :foo, :track)
+      ExpectationRecord.remove(expectation)
+      assert_equal(0, ExpectationRecord.expectations.size)
+    end
   end
 end
