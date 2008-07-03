@@ -38,6 +38,10 @@ class Storage
   def ok_or_problem(ok)
     ok == :ok ? ok : raise(Problem)
   end
+  
+  def never_call_me
+    :whatever
+  end
 end
 
 class Problem < Exception;end

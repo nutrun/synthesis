@@ -1,6 +1,8 @@
 require "test/unit"
 require "fileutils"
 require File.dirname(__FILE__) + "/../../test_project"
+require "rubygems"
+require "mocha"
 
 class StorageTest < Test::Unit::TestCase
   def test_saves_to_file
@@ -20,5 +22,10 @@ class StorageTest < Test::Unit::TestCase
   
   def test_ok_raises_problem_when_not_given_ok
     assert_raise(Problem) { Storage.new("").ok_or_problem(:not_ok) }
+  end
+  
+  def test_never_called
+    storage = Storage.new("")
+    storage.expects(:never_call_me).never
   end
 end

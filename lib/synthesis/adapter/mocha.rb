@@ -19,6 +19,7 @@ module Synthesis
       Mocha::Expectation.record_expected_arguments_on(:with)
       Mocha::Expectation.record_expected_return_values_on(:returns)
       Mocha::Expectation.record_expected_return_values_on(:raises)
+      Mocha::Expectation.remove_expectation_on(:never)
     end
     
     def stop_collecting_expectations

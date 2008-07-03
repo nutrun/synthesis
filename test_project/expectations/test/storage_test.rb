@@ -15,4 +15,7 @@ Expectations do
   expect Problem do
     Storage.new("").ouch!
   end
+  
+  # expect(Storage.new("").to.receive(:never_call_me).never) {}
+  
 end

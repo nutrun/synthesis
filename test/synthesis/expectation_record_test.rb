@@ -78,5 +78,12 @@ module Synthesis
       ExpectationRecord.record_invocations
       ExpectationRecord.expectations.each { |val| assert(!val.is_a?(Array)) }
     end
+    
+    def test_removes_expectation
+      c = Class.new { def foo; end }
+      expectation = ExpectationRecord.add_expectation(c, :foo, :track)
+      ExpectationRecord.remove(expectation)
+      assert_equal(0, ExpectationRecord.expectations.size)
+    end
   end
 end

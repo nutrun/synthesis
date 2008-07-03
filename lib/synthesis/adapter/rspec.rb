@@ -23,6 +23,7 @@ module Synthesis
       Spec::Mocks::MessageExpectation.record_expected_arguments_on(:with)
       Spec::Mocks::MessageExpectation.record_expected_return_values_on(:and_return)
       Spec::Mocks::MessageExpectation.record_expected_return_values_on(:and_raise)
+      Spec::Mocks::MessageExpectation.remove_expectation_on(:never)
     end
     
     def stop_collecting_expectations
