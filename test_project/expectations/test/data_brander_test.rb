@@ -14,5 +14,15 @@ Expectations do
       return true
     end
     fail
-  end  
+  end
+    
+  expect Storage.new("").to.receive(:ok_or_problem).with(:ok).returns(:ok) do |s|
+    DataBrander.new(s).ok
+  end
+    
+  expect Problem do
+    storage = Storage.new("")
+    storage.expects(:ok_or_problem).with(:not_ok).raises(Problem.new)
+    DataBrander.new(storage).not_ok
+  end
 end

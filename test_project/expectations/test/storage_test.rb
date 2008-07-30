@@ -12,10 +12,12 @@ Expectations do
     end
   end
   
-  expect Problem do
-    Storage.new("").ouch!
-  end
+  expect(Problem) { Storage.new("").ouch! }
   
-  # expect(Storage.new("").to.receive(:never_call_me).never) {}
+  expect(Storage.new("").to.receive(:never_call_me).never) {}
+
+  expect(:ok) { Storage.new("").ok_or_problem(:ok) }
+  
+  expect(Problem) {Storage.new("").ok_or_problem(:not_ok)}
   
 end
