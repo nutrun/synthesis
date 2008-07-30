@@ -25,7 +25,6 @@ class StorageTest < Test::Unit::TestCase
   end
   
   def test_never_called
-    storage = Storage.new("")
-    storage.expects(:never_call_me).never
+    Storage.new("").expects(:never_call_me).never
   end
 end
