@@ -43,15 +43,9 @@ module Synthesis
       self
     end
 
-private 
+    private 
     def load_paths
-      @libs.each do |path|
-        add_to_load_path File.join(Dir.pwd, path)
-      end
-    end
-    
-    def add_to_load_path path
-         $LOAD_PATH.unshift path
+      @libs.each { |path| $:.unshift(File.join(Dir.pwd, path)) }
     end
   end
 end
