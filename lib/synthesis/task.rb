@@ -9,7 +9,7 @@ module Synthesis
     attr_accessor :verbose, :pattern, :ruby_opts, :adapter, :out, :ignored, :libs
 
     def initialize(name='synthesis:test')
-      @name, @ignored, @libs = name, [], ['lib']
+      @name, @ignored, @libs = name, [], []
       yield self if block_given?
       @pattern ||= 'test/**/*_test.rb'
       @ruby_opts ||= []
