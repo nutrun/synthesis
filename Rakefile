@@ -65,3 +65,13 @@ end
 
 desc "Remove rdoc and package artefacts"
 task :clean => %w[clobber_package clobber_rdoc]
+
+task(:lf) {p Dir["lib/**/*rb"] }
+
+task(:check_gemspec) do
+  require 'rubygems/specification'
+  data = File.read('synthesis.gemspec')
+  spec = nil
+  Thread.new { spec = eval("$SAFE = 3\n#{data}") }.join
+  puts spec
+end

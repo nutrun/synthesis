@@ -1,5 +1,3 @@
-require 'rubygems'
-
 GEMSPEC =Gem::Specification.new do |s|
   s.name = 'synthesis'
   s.version = '0.1.6'
@@ -14,9 +12,12 @@ GEMSPEC =Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README', 'COPYING']
   s.files = [
     "COPYING",
+    "Rakefile",
+    "README",
+    "synthesis.gemspec",
     "lib/synthesis/adapter/expectations.rb",
     "lib/synthesis/adapter/mocha.rb",
-    "lib/synthesis/adapter/rspec.rb", 
+    "lib/synthesis/adapter/rspec.rb",
     "lib/synthesis/adapter.rb",
     "lib/synthesis/class.rb",
     "lib/synthesis/expectation.rb",
@@ -35,9 +36,6 @@ GEMSPEC =Gem::Specification.new do |s|
     "lib/synthesis/util/mock_instance/mocha.rb",
     "lib/synthesis/util/mock_instance/rspec.rb",
     "lib/synthesis/util/mock_instance.rb",
-    "lib/synthesis.rb",
-    "Rakefile",
-    "README",
-    "synthesis.gemspec"
+    "lib/synthesis.rb"
   ]
 end
