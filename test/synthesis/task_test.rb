@@ -36,14 +36,7 @@ module Synthesis
       Task.new { |t| t.ignored = [Array, Hash] }
     end
 
-    def test_loads_lib_directory_by_default
-      $:.expects(:unshift).with(File.join(Dir.pwd, "lib"))
-      Runner.expects(:run)
-      Task.new
-    end
-    
     def test_loads_selected_lib_directories_in_the_load_path
-      $:.expects(:unshift).with(File.join(Dir.pwd, "lib"))
       $:.expects(:unshift).with(File.join(Dir.pwd, "path"))
       Runner.expects(:run)
       Task.new { |t| t.libs << 'path' }
