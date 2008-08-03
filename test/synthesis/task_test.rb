@@ -37,14 +37,14 @@ module Synthesis
     end
 
     def test_loads_lib_directory_by_default
-      Task.any_instance.expects(:add_to_load_path).with { |path| path =~ /lib/}
+      $:.expects(:unshift).with(File.join(Dir.pwd, "lib"))
       Runner.expects(:run)
       Task.new
     end
-
+    
     def test_loads_selected_lib_directories_in_the_load_path
-      Task.any_instance.expects(:add_to_load_path).with { |path| path =~ /lib/}
-      Task.any_instance.expects(:add_to_load_path).with { |path| path =~ /path/}
+      $:.expects(:unshift).with(File.join(Dir.pwd, "lib"))
+      $:.expects(:unshift).with(File.join(Dir.pwd, "path"))
       Runner.expects(:run)
       Task.new { |t| t.libs << 'path' }
     end
