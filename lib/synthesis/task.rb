@@ -6,10 +6,10 @@ require File.dirname(__FILE__) + "/../synthesis/logging"
 module Synthesis
   class Task < Rake::TaskLib
     include Logging
-    attr_accessor :verbose, :pattern, :ruby_opts, :adapter, :out, :ignored
+    attr_accessor :verbose, :pattern, :ruby_opts, :adapter, :out, :ignored, :libs
 
     def initialize(name='synthesis:test')
-      @name, @ignored = name, []
+      @name, @ignored, @libs = name, [], ['lib']
       yield self if block_given?
       @pattern ||= 'test/**/*_test.rb'
       @ruby_opts ||= []
@@ -32,7 +32,7 @@ module Synthesis
       desc "Run Synthesis tests"
       task @name do
         RakeFileUtils.verbose(@verbose) do
-          @ruby_opts.unshift("-w") if @warning
+          load_paths
           require File.dirname(__FILE__) + "/../synthesis"
           require File.dirname(__FILE__) + "/../synthesis/runner"
           Synthesis::Logging.const_set(:OUT, @out) if @out
@@ -41,6 +41,17 @@ module Synthesis
         end
       end
       self
+    end
+
+private 
+    def load_paths
+      @libs.each do |path|
+        add_to_load_path File.join(Dir.pwd, path)
+      end
+    end
+    
+    def add_to_load_path path
+         $LOAD_PATH.unshift path
     end
   end
 end
