@@ -7,7 +7,7 @@ require File.dirname(__FILE__) + "/lib/synthesis/task"
 
 load 'synthesis.gemspec'
 
-task :default => :test
+task :default => [:test, "test_project:all"]
 
 desc "Run all tests"
 task :test => %w[test:core test:mocha test:spec]
@@ -54,6 +54,26 @@ end
 Synthesis::Task.new('synthesis:expectations') do |t|
   t.adapter = :expectations
   t.pattern = 'test_project/expectations/test/*_test.rb'
+end
+
+namespace :test_project do
+  task :all do
+    STDOUT.puts `rake test_project:mocha`
+    STDOUT.puts `rake test_project:rspec`
+    STDOUT.puts `rake test_project:expectations`
+  end
+  
+  Rake::TestTask.new('mocha') do |t|
+    t.pattern = 'test_project/mocha/**/*_test.rb'
+  end
+  
+  Rake::TestTask.new('rspec') do |t|
+    t.pattern = 'test_project/mocha/**/*_test.rb'
+  end
+  
+  Rake::TestTask.new('expectations') do |t|
+    t.pattern = 'test_project/mocha/**/*_test.rb'
+  end
 end
 
 desc 'Generate RDoc'

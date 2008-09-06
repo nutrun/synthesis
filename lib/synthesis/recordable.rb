@@ -1,7 +1,7 @@
 module Synthesis
   module Recordable
     def recordable_method(meth)
-      if method_defined?(meth)
+      if method_defined?(meth) || private_method_defined?(meth)
         defined_recordable_method(meth)
       else
         magic_recordable_method(meth)
