@@ -112,5 +112,18 @@ module Synthesis
         foo.new.bar
       end
     end
+    
+    def test_records_private_method_invocation
+      foo = Class.new do
+        def a; b end
+        private
+        def b;end
+      end
+      foo.extend(Recordable)
+      foo.recordable_method(:b)
+      bar = foo.new
+      MethodInvocationWatcher.expects(:invoked).with(bar, :b, [], [nil])
+      bar.a
+    end
   end
 end

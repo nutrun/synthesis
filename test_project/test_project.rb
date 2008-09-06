@@ -1,7 +1,7 @@
 class DataBrander
   BRAND = "METAL"
   
-  def initialize(storage)
+  def initialize(storage = '')
     @storage = storage
   end
   
@@ -19,6 +19,10 @@ class DataBrander
   
   def not_ok
     @storage.ok_or_problem(:not_ok)
+  end
+  
+  def open_file
+    open(File.dirname(__FILE__) + '/test_project.rb')
   end
 end
 

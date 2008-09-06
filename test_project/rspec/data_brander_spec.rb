@@ -33,4 +33,15 @@ describe DataBrander do
       DataBrander.new(storage).not_ok
     end.should raise_error(Problem)
   end
+  
+  it "mock open file" do
+    data_brander = DataBrander.new
+    path = File.dirname(__FILE__) + '/../test_project.rb'
+    data_brander.should_receive(:open).with(path)
+    data_brander.open_file
+  end
+  
+  it "should concrete open file" do
+    DataBrander.new.open_file
+  end
 end

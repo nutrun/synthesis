@@ -33,4 +33,14 @@ class DataBranderTest < Test::Unit::TestCase
       DataBrander.new(storage).not_ok
     end
   end
+  
+  def test_mock_open_file
+    data_brander = DataBrander.new
+    data_brander.expects(:open).with(File.dirname(__FILE__) + '/../../test_project.rb')
+    data_brander.open_file
+  end
+  
+  def test_concreate_open_file
+    DataBrander.new.open_file
+  end
 end
