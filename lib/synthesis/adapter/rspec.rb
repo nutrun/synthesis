@@ -7,11 +7,11 @@ require File.dirname(__FILE__) + "/../../synthesis"
 module Synthesis
   class RSpecAdapter < Adapter
     def run
-      rspec_options.files.clear
+      Synthesis.rspec_runner_options.files.clear
       fail_unless do
-        rspec_options.instance_variable_set(:@formatters, nil)
-        # rspec_options.instance_variable_set(:@format_options, [["profile", STDOUT]])
-        rspec_options.run_examples
+        Synthesis.rspec_runner_options.instance_variable_set(:@formatters, nil)
+        # Synthesis.rspec_runner_options.instance_variable_set(:@format_options, [["profile", STDOUT]])
+        Synthesis.rspec_runner_options.run_examples
       end
     end
     
@@ -30,5 +30,11 @@ module Synthesis
       Spec::Mocks::MessageExpectation.stop_intercepting!
       Spec::Mocks::Methods.stop_recording!
     end
-  end  
+  end
+  
+  def rspec_runner_options
+    Spec::Runner.options rescue rspec_options
+  end
+  
+  module_function :rspec_runner_options
 end
