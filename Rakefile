@@ -86,7 +86,7 @@ end
 desc "Remove rdoc and package artefacts"
 task :clean => %w[clobber_package clobber_rdoc]
 
-task(:lf) {p Dir["lib/**/*rb"] }
+task(:lf) {p Dir["lib/**/*rb"]}
 
 task(:check_gemspec) do
   require 'rubygems/specification'
