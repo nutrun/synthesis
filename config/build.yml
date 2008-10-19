@@ -4,7 +4,7 @@
 
 pipeline:
   - name: Main
-  - command: rake
+    command: rake
   # - name: Bootstrap
   #   command: rake bootstrap
   # - name: Run Specs
