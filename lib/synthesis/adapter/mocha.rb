@@ -8,7 +8,7 @@ module Synthesis
   class MochaAdapter < Adapter
     def run
       Test::Unit.run = true # Yes means no...
-      fail_unless { Test::Unit::AutoRunner.run }
+			fail_unless { Test::Unit::AutoRunner.run(false, nil, []) }
     end
     
     def collect_expectations
