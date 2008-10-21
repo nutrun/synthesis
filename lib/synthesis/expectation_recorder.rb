@@ -2,7 +2,7 @@ module Synthesis
   # Extend by the mock object framework's construct for declaring a
   # mock object so that Synthesis can tap into it in order to record
   # the expectation.
-  module ExpectationRecordEnabled
+  module ExpectationRecorder
     # Intercept the mock object framework's method for declaring a mock
     # object so that Synthesis can record it.
     def record_expectations_on(method_name)
@@ -25,7 +25,7 @@ module Synthesis
       end
     end
     
-    # Restore the original methods ExpectationRecordEnabled has rewritten and
+    # Restore the original methods ExpectationRecorder has rewritten and
     # undefine their intercepted counterparts.
     def stop_recording!
       method_name = @original_expects

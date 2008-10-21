@@ -1,6 +1,6 @@
 GEMSPEC =Gem::Specification.new do |s|
   s.name = 'synthesis'
-  s.version = '0.1.7'
+  s.version = '0.1.8'
   s.platform = Gem::Platform::RUBY
   s.rubyforge_project = "synthesis"
   s.summary, s.description = 'A tool for Synthesized Testing'
@@ -24,10 +24,10 @@ GEMSPEC =Gem::Specification.new do |s|
     "lib/synthesis/expectation_interceptor.rb",
     "lib/synthesis/expectation_matcher.rb",
     "lib/synthesis/expectation_record.rb",
-    "lib/synthesis/expectation_record_enabled.rb",
     "lib/synthesis/formatter/dot.rb",
     "lib/synthesis/formatter/text.rb",
     "lib/synthesis/formatter.rb",
+    "lib/synthesis/expectation_recorder.rb",
     "lib/synthesis/logging.rb",
     "lib/synthesis/method_invocation_watcher.rb",
     "lib/synthesis/module.rb",
