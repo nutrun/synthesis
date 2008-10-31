@@ -32,8 +32,7 @@ end
 
 class Target
   def save(data)
-    return false if @called
-    @called = true
+    data == 'rock'
   end
   
   def self.save(arg)
@@ -56,7 +55,7 @@ describe "Scenarios for testing the dot reportter" do
   it "should cover target with unit test" do
     target = Target.new
     target.save('rock').should be_true
-    target.save('rock').should be_false
+    target.save('metal').should be_false
     
     Target.save('rock').should be_true
     Target.save('metal').should be_false
