@@ -1,6 +1,5 @@
 require "rubygems"
 require "rake/testtask"
-require "rake/gempackagetask"
 require 'rake/rdoctask'
 require 'rake/contrib/sshpublisher'
 require File.dirname(__FILE__) + "/lib/synthesis/task"
@@ -90,14 +89,6 @@ task :publish_rdoc do
   Rake::Task[:rdoc].invoke
   Rake::SshDirPublisher.new("gmalamid@rubyforge.org", "/var/www/gforge-projects/synthesis", "doc").upload
 end
-
-Rake::GemPackageTask.new(GEMSPEC) do |t|
-  t.need_zip = false
-  t.need_tar = false
-end
-
-desc "Remove rdoc and package artefacts"
-task :clean => %w[clobber_package clobber_rdoc]
 
 task(:lf) {p Dir["lib/**/*rb"]}
 
