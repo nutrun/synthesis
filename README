@@ -34,6 +34,8 @@ Synthesis can be setup to ignore certain classes or modules when collecting expe
 
 If +pattern+ is not specified, it will default to <tt>test/**/*_test.rb</tt>
 
+As of version 0.2.0, Synthesis has a +DOT+ formatter which, when used, will output text in the DOT graph description language, producing system visualizations as specified by the simulated interactions in the system's tests. The output of the +DOT+ formatter can be used with tools like Graphviz( http://www.graphviz.org/ ).
+
 == Usage examples
 
 To use with Test::Unit and Mocha, ignoring Array and Hash:
@@ -61,6 +63,14 @@ To use with Expectations, redirecting output to a file
   Synthesis::Task.new do |t|
     t.adapter = :expectations
     t.out = File.new "synthesis.test.txt", "a"
+  end
+  
+To output a DOT graph:
+
+  require "synthesis/task"
+	
+  Synthesis::Task.new do |t|
+    t.formatter = :dot
   end
 
 == Utilities
