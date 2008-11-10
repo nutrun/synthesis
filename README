@@ -56,7 +56,7 @@ To use with RSpec, running all specs in the <tt>spec</tt> directory:
     t.pattern = 'spec/**/*_spec.rb'
   end
 
-To use with Expectations, redirecting output to a file
+To use with Expectations, redirecting output to a file:
 
   require "synthesis/task"
 	
@@ -71,6 +71,15 @@ To output a DOT graph:
 	
   Synthesis::Task.new do |t|
     t.formatter = :dot
+  end
+
+To use Synthesis with Rails:
+
+  require "synthesis/task"
+
+  Synthesis::Task.new do |t|
+    RAILS_ENV = "test"
+    t.pattern = 'test/**/*_test.rb'
   end
 
 == Utilities
