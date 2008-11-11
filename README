@@ -79,6 +79,7 @@ To use Synthesis with Rails:
 
   Synthesis::Task.new do |t|
     RAILS_ENV = "test"
+    Rake::Task['environment'].invoke # This loads the Rails environment, which may make your build slower. Use only if needed
     t.pattern = 'test/**/*_test.rb'
   end
 
