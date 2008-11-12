@@ -8,12 +8,12 @@ GEMSPEC =Gem::Specification.new do |s|
   s.email = 'george@nutrun.com'
   s.homepage = 'http://synthesis.rubyforge.org'
   s.has_rdoc = true
-  s.rdoc_options += ['--quiet', '--title', 'Synthesis', '--main', 'README', '--inline-source']
-  s.extra_rdoc_files = ['README', 'COPYING']
+  s.rdoc_options += ['--quiet', '--title', 'Synthesis', '--main', 'README.rdoc', '--inline-source']
+  s.extra_rdoc_files = ['README.rdoc', 'COPYING']
   s.files = [
     "COPYING",
     "Rakefile",
-    "README",
+    "README.rdoc",
     "synthesis.gemspec",
     "lib/synthesis/adapter/expectations.rb",
     "lib/synthesis/adapter/mocha.rb",
