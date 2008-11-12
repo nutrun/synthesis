@@ -4,7 +4,7 @@ load File.dirname(__FILE__) + "/../../../lib/synthesis/formatter/dot.rb"
 module Synthesis
   class DotFormatterTest < Test::Unit::TestCase
     def test_includes_text_format_in_expectation
-      Synthesis::DotFormatter.new
+      Synthesis::DotFormatter.new(anything)
       ancestors = Synthesis::Expectation::Expectation.ancestors
       assert(ancestors.include?(Synthesis::ExpectationReportFormat::Dot))
     end

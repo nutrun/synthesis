@@ -1,15 +1,14 @@
 require File.dirname(__FILE__) + "/helper"
 
 module Synthesis
+  class DummyFormatter < Formatter
+  end
+  
   class FormatterTest < Test::Unit::TestCase
-    def test_loads_text_formatter
-      load File.dirname(__FILE__) + "/../../lib/synthesis/formatter/text.rb"
-      assert_kind_of(Synthesis::TextFormatter, Formatter.load(anything))
-    end
-    
-    def test_loads_dot_formatter
-      load File.dirname(__FILE__) + "/../../lib/synthesis/formatter/dot.rb"
-      assert_kind_of(Synthesis::DotFormatter, Formatter.load(anything))
+    def test_loads_appropriate_formatter_dinamically
+      Formatter.instance_variable_set(:@formatter, DummyFormatter)
+      Formatter.load(anything)
+      assert_kind_of(DummyFormatter, Formatter.load(anything))
     end
   end
 end
