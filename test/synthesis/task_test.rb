@@ -8,7 +8,7 @@ module Synthesis
     end
 
     def test_filters_based_on_a_pattern
-      Runner.expects(:run).with(anything, '*.rb', :text)
+      Runner.expects(:run).with(anything, '*.rb', :text, anything)
       Task.new { |t| t.pattern = '*.rb' }
     end
 
@@ -19,20 +19,20 @@ module Synthesis
       Runner.expects(:run)
       Task.new { |t| t.out = File.new "synthesis.test.txt", "a" }
     end
-
+    
     def test_selects_the_rspec_adapter
-      Runner.expects(:run).with(:rspec, anything, :text)
+      Runner.expects(:run).with(:rspec, anything, :text, anything)
       Task.new { |t| t.adapter = :rspec }
     end
 
     def test_uses_mocha_as_the_default_adapter
-      Runner.expects(:run).with(:mocha, anything, :text)
+      Runner.expects(:run).with(:mocha, anything, :text, anything)
       Task.new
     end
 
     def test_ignores_selected_classes
       ExpectationRecord.expects(:ignore).with(Array, Hash)
-      Runner.expects(:run).with(:mocha, anything, :text)
+      Runner.expects(:run).with(:mocha, anything, :text, anything)
       Task.new { |t| t.ignored = [Array, Hash] }
     end
 
@@ -40,6 +40,16 @@ module Synthesis
       $:.expects(:unshift).with(File.join(Dir.pwd, "path"))
       Runner.expects(:run)
       Task.new { |t| t.libs << 'path' }
+    end
+    
+    def test_accepts_custom_formatter
+      Runner.expects(:run).with(:mocha, anything, :dot, anything)
+      Task.new { |t| t.formatter = :dot }
+    end
+    
+    def test_accepts_custom_formatter_output
+      Runner.expects(:run).with(:mocha, anything, :dot, '/dev/null')
+      Task.new { |t| t.formatter = :dot; t.formatter_out = '/dev/null' }
     end
   end
 end
