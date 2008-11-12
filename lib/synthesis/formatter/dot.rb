@@ -4,22 +4,23 @@ require "sexp_processor"
 
 module Synthesis
   class DotFormatter < Formatter
-    def initialize
+    def initialize(out)
+      super
       Expectation::Expectation.send(:include, ExpectationReportFormat::Dot)
     end
     
     def digraph
-      puts "digraph synthesis_expectations {"
-      puts "  rankdir=LR;"
-      puts "  size=\"8,10\";"
-      puts "  ratio=\"fill\";"
-      puts "  node [shape = circle];"
-      puts "  edge [color = green]"
+      @out.puts "digraph synthesis_expectations {"
+      @out.puts "  rankdir=LR;"
+      @out.puts "  size=\"8,10\";"
+      @out.puts "  ratio=\"fill\";"
+      @out.puts "  node [shape = circle];"
+      @out.puts "  edge [color = green]"
       report_tested_expectations
-      puts
-      puts "  edge [color = red]"
+      @out.puts
+      @out.puts "  edge [color = red]"
       report_untested_expectations
-      puts "}"
+      @out.puts "}"
     end
     alias format_failure digraph
     alias format_success digraph

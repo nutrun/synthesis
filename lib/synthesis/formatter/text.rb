@@ -2,22 +2,27 @@ module Synthesis
   class TextFormatter < Formatter
     include Logging
     
-    def initialize
+    def initialize(out)
+      super
       Expectation::Expectation.send(:include, ExpectationReportFormat::Text)
     end
     
     def format_success
-      log; log "Verified #{ExpectationRecord.expectations.size} expectations"
-      log "SUCCESS."
+      @out.puts "[Synthesis] "
+      @out.puts "[Synthesis] Verified #{ExpectationRecord.expectations.size} expectations"
+      @out.puts "[Synthesis] SUCCESS."
     end
 
     def format_failure
-      log; log "Tested Expectations: "
+      @out.puts "[Synthesis] "
+      @out.puts "[Synthesis] Tested Expectations: "
       report_tested_expectations
-      log; log "Untested Expectations: "
+      @out.puts "[Synthesis] "
+      @out.puts "[Synthesis] Untested Expectations: "
       report_untested_expectations
-      log "Ignoring: #{ExpectationRecord.ignored.to_a * ', '}"
-      log; log "FAILED."
+      @out.puts "[Synthesis] Ignoring: #{ExpectationRecord.ignored.to_a * ', '}"
+      @out.puts "[Synthesis] "
+      @out.puts "[Synthesis] FAILED."
     end
   end
   

@@ -7,7 +7,7 @@ module Synthesis
   class Task < Rake::TaskLib
     include Logging
     attr_accessor :verbose, :pattern, :ruby_opts
-    attr_accessor :adapter, :out, :ignored, :libs, :formatter
+    attr_accessor :adapter, :out, :ignored, :libs, :formatter, :formatter_out
 
     def initialize(name='synthesis:test')
       @name, @ignored, @libs = name, [], []
@@ -39,7 +39,7 @@ module Synthesis
           require File.dirname(__FILE__) + "/../synthesis/runner"
           Synthesis::Logging.const_set(:OUT, @out) if @out
           Synthesis::ExpectationRecord.ignore(*@ignored)
-          Synthesis::Runner.run(@adapter, @pattern, @formatter)
+          Synthesis::Runner.run(@adapter, @pattern, @formatter, @formatter_out)
         end
       end
       self
