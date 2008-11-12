@@ -13,7 +13,7 @@ task :test => %w[test:core test:mocha test:spec]
 
 desc "Run core tests"
 Rake::TestTask.new('test:core') do |t|
-  t.pattern = 'test/synthesis/*_test.rb'
+  t.pattern = '{test/synthesis/,test/synthesis/formatter/}*_test.rb'
 end
 
 desc "Run Mocha adapter tests"
