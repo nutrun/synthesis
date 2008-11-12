@@ -65,12 +65,13 @@ To use with Expectations, redirecting output to a file:
     t.out = File.new "synthesis.test.txt", "a"
   end
   
-To output a DOT graph:
+To output a DOT graph, with an output file called "synthesis.dot" (if formatter_out is not specified, the default ouput is STDOUT):
 
   require "synthesis/task"
 	
   Synthesis::Task.new do |t|
     t.formatter = :dot
+    t.formatter_out = "synthesis.dot"
   end
 
 To use Synthesis with Rails:
