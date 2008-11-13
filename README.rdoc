@@ -65,7 +65,11 @@ To use with Expectations, redirecting output to a file:
     t.out = File.new "synthesis.test.txt", "a"
   end
   
-To output a DOT graph, with an output file called "synthesis.dot" (if formatter_out is not specified, the default ouput is STDOUT):
+To output a DOT graph, first make sure you have sexp_processor installed:
+
+  sudo gem install sexp_processor
+
+Then, to output a file called "synthesis.dot", do (if formatter_out is not specified, the default ouput is STDOUT):
 
   require "synthesis/task"
 	
