@@ -77,11 +77,11 @@ end
 
 desc 'Generate RDoc'
 Rake::RDocTask.new do |task|
-  task.main = 'README'
+  task.main = 'README.rdoc'
   task.title = 'synthesis'
   task.rdoc_dir = 'doc'
   task.options << "--line-numbers" << "--inline-source"
-  task.rdoc_files.include('README', 'lib/**/*.rb')
+  task.rdoc_files.include('README.rdoc', 'lib/**/*.rb')
 end
 
 desc "Upload RDoc to RubyForge"
