@@ -39,7 +39,6 @@ module Synthesis
       def test_subject_name
         filename, line, method = test_subject[1].split(':')
         method = method.scan(/`(.*)'/)[0][0]
-        STDERR.puts "Analyzing file: #{filename}##{method}}"
         ruby = File.read(filename)
         parser = ParseTree.new
         sexp = parser.parse_tree_for_string(ruby, filename).first
