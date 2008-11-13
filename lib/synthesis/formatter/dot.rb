@@ -12,8 +12,9 @@ module Synthesis
     def digraph
       @out.puts "digraph synthesis_expectations {"
       @out.puts "  rankdir=LR;"
-      @out.puts "  size=\"8,10\";"
+      @out.puts "  size=\"10,10\";"
       @out.puts "  ratio=\"fill\";"
+      @out.puts "  remincross=\"true\";"
       @out.puts "  node [shape = circle];"
       @out.puts "  edge [color = green]"
       report_tested_expectations
@@ -38,6 +39,7 @@ module Synthesis
       def test_subject_name
         filename, line, method = test_subject[1].split(':')
         method = method.scan(/`(.*)'/)[0][0]
+        STDERR.puts "Analyzing file: #{filename}##{method}}"
         ruby = File.read(filename)
         parser = ParseTree.new
         sexp = parser.parse_tree_for_string(ruby, filename).first
@@ -85,6 +87,13 @@ module Synthesis
           name = exp.shift
           @klazz = @ancestors * '::' if name == method.to_sym
           s(:defn, name, process(exp.shift), process(exp.shift))
+        end
+
+        def process_defs(exp)
+          selff = exp.shift
+          name = exp.shift
+          @klazz = @ancestors * '::' if name == method.to_sym
+          s(:defs, selff, name, process(exp.shift), process(exp.shift))
         end
       end
     end
