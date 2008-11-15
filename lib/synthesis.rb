@@ -17,4 +17,4 @@ require "synthesis/reporter"
 require "synthesis/formatter"
 require "synthesis/adapter"
 
-require "backtrace"
+require "callstack"

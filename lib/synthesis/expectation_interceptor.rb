@@ -14,7 +14,7 @@ module Synthesis
         define_method(:get_invoke_method_name) {method_name}
         
         def temp_invoke(*expected_parameters, &matching_block)
-          synthesis_expectation.add_test_subject(backtrace) if synthesis_expectation
+          synthesis_expectation.add_test_subject(callstack) if synthesis_expectation
           send("intercepted_#{get_invoke_method_name}", *expected_parameters, &matching_block)
         end
           
