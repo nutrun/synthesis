@@ -34,7 +34,7 @@ Synthesis can be setup to ignore certain classes or modules when collecting expe
 
 If +pattern+ is not specified, it will default to <tt>test/**/*_test.rb</tt>
 
-As of version 0.2.0, Synthesis has a +DOT+ formatter which, when used, will output text in the DOT graph description language, producing system visualizations as specified by the simulated interactions in the system's tests. The output of the +DOT+ formatter can be used with tools like Graphviz( http://www.graphviz.org/ ).
+As of version 0.2.0, Synthesis has a +DOT+ formatter which, when used, will output text in the DOT graph description language, producing system visualizations as specified by the simulated interactions in the system's tests. The output of the +DOT+ formatter can be used with tools like Graphviz( http://www.graphviz.org/ ). The +DOT+ formatter depends on the +parse_tree+ and +sexp_processor+ libraries.
 
 == Usage examples
 
