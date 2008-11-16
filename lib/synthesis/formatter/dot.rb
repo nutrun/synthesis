@@ -1,6 +1,11 @@
-require "parse_tree"
-require "sexp"
-require "sexp_processor"
+begin
+  require "parse_tree"
+	require "sexp"
+	require "sexp_processor"
+rescue LoadError
+  puts "Dot formatter depends on the sexp_processor and ParseTree libraries"
+  exit 1
+end
 
 module Synthesis
   class DotFormatter < Formatter
