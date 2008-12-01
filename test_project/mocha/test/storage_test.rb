@@ -13,7 +13,7 @@ class StorageTest < Test::Unit::TestCase
   end
   
   def test_ouch_raises_problem
-    assert_raise(Problem) { Storage.new("").ouch! }
+    assert_raises(Problem) { Storage.new("").ouch! }
   end
   
   def test_ok_or_problem_returns_ok_when_given_ok
@@ -21,7 +21,7 @@ class StorageTest < Test::Unit::TestCase
   end
   
   def test_ok_raises_problem_when_not_given_ok
-    assert_raise(Problem) { Storage.new("").ok_or_problem(:not_ok) }
+    assert_raises(Problem) { Storage.new("").ok_or_problem(:not_ok) }
   end
   
   def test_never_called

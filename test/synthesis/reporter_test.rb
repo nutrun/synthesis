@@ -44,7 +44,7 @@ module Synthesis
     end
     
     def test_raises_nice_error_for_invalid_format
-      assert_raise RuntimeError, :message => "Invalid format: invalid" do
+      assert_raises RuntimeError, :message => "Invalid format: invalid" do
         Reporter.report(:invalid, nil)
       end
     end

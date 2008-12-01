@@ -17,7 +17,7 @@ class DataBranderTest < Test::Unit::TestCase
   def test_delegates_problem
     storage = Storage.new("")
     storage.expects(:ouch!).raises(Problem.new)
-    assert_raise(Problem) { DataBrander.new(storage).dont_do_this }
+    assert_raises(Problem) { DataBrander.new(storage).dont_do_this }
   end
   
   def test_is_ok
@@ -27,7 +27,7 @@ class DataBranderTest < Test::Unit::TestCase
   end
   
   def test_does_not_rescue_problem_on_not_ok
-    assert_raise(Problem) do
+    assert_raises(Problem) do
       storage = Storage.new("")
       storage.expects(:ok_or_problem).with(:not_ok).raises(Problem.new)
       DataBrander.new(storage).not_ok

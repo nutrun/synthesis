@@ -44,7 +44,7 @@ module Synthesis
       foo = Class.new
       foo.extend(Recordable)
       foo.recordable_method(:bar)
-      assert_raise(RuntimeError) { foo.new.__recordable__bar }
+      assert_raises(RuntimeError) { foo.new.__recordable__bar }
     end
     
     def test_does_not_redefine_already_defined_magic_method
@@ -80,7 +80,7 @@ module Synthesis
     end
     
     def test_reraises_recorded_exception
-      assert_raise(RuntimeError) do
+      assert_raises(RuntimeError) do
         foo = Class.new {def bar() raise end}
         foo.extend(Recordable)
         foo.recordable_method(:bar)
@@ -105,7 +105,7 @@ module Synthesis
     end
     
     def test_reraises_recorded_exception_for_magic_method
-      assert_raise(RuntimeError) do
+      assert_raises(RuntimeError) do
         foo = Class.new {def method_missing(m, *a) raise end}
         foo.extend(Recordable)
         foo.recordable_method(:bar)

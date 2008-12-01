@@ -14,7 +14,7 @@ module Synthesis
     end
     
     def test_raises_nice_error_for_invalid_format
-      assert_raise RuntimeError, :message => "Invalid adapter: junit" do
+      assert_raises RuntimeError, :message => "Invalid adapter: junit" do
         Runner.run(:junit, anything, :text, nil)
       end
     end
