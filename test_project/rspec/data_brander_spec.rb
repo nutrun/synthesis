@@ -7,6 +7,12 @@ describe DataBrander do
     pstore.should_receive(:save).with('METAL - rock')
     DataBrander.new(pstore).save_branded 'rock'
   end
+
+	it "should save branded to pstore with expected method name as string" do
+	  storage = Storage.new 'whatever'
+    storage.should_receive("save").with('METAL - rock')
+    DataBrander.new(storage).save_branded('rock')
+	end
   
   it "should ignore total ducks" do
     m = mock(Storage)

@@ -11,7 +11,7 @@ module Synthesis
       attr_accessor :args
       
       def initialize(receiver, method, track, args, return_values)
-        @receiver, @method, @track, @args = receiver, method, track, args
+        @receiver, @method, @track, @args = receiver, method.to_sym, track, args
         @return_values = return_values
       end
       

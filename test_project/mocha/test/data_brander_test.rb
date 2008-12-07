@@ -8,6 +8,12 @@ class DataBranderTest < Test::Unit::TestCase
     DataBrander.new(storage).save_branded('rock')
   end
   
+  def test_saves_branded_to_storage_with_expected_method_name_as_string
+    storage = Storage.new 'whatever'
+    storage.expects("save").with('METAL - rock')
+    DataBrander.new(storage).save_branded('rock')
+  end
+  
   def test_ignores_total_ducks
     m = mock
     m.expects(:foo)

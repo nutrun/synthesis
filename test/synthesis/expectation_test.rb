@@ -119,5 +119,10 @@ module Synthesis
       expectation = Expectation.new(String.new, :new, :track, [])
       assert_equal("String.new", expectation.receiver_repr)
     end
+    
+    def test_converts_method_name_to_symbol
+      expectation = Expectation.new(String, "to_s", :track, [])
+      assert_equal(:to_s, expectation.method)
+    end
   end
 end
