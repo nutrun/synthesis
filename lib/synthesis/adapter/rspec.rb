@@ -8,15 +8,15 @@ module Synthesis
   class RSpecAdapter < Adapter
     def run
       fail_unless do
-        rspec_options = begin
+        rspec_opts = begin
           Spec::Runner.options
         rescue
           rspec_options
         end
         
-        rspec_options.files.clear
-        rspec_options.instance_variable_set(:@formatters, nil)
-        rspec_options.run_examples
+        rspec_opts.files.clear
+        rspec_opts.instance_variable_set(:@formatters, nil)
+        rspec_opts.run_examples
         # Synthesis.rspec_runner_options.instance_variable_set(:@format_options, [["profile", STDOUT]])
       end
     end
