@@ -7,7 +7,7 @@ module Synthesis
         raise "Invalid adapter: #{adapter}"
       end
       Adapter.load(pattern).run
-      at_exit { Reporter.report(formatter, formatter_out) unless $! }
+      at_exit { exit Reporter.report(formatter, formatter_out) unless $! }
     end    
   end
 end
