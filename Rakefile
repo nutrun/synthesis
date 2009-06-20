@@ -50,16 +50,10 @@ Synthesis::Task.new('synthesis:spec:graph') do |t|
   t.formatter = :dot
 end
 
-Synthesis::Task.new('synthesis:expectations') do |t|
-  t.adapter = :expectations
-  t.pattern = 'test_project/expectations/test/*_test.rb'
-end
-
 namespace :test_project do
   task :all do
     STDOUT.puts `rake test_project:mocha`
     STDOUT.puts `rake test_project:rspec`
-    STDOUT.puts `rake test_project:expectations`
   end
   
   Rake::TestTask.new('mocha') do |t|
@@ -67,10 +61,6 @@ namespace :test_project do
   end
   
   Rake::TestTask.new('rspec') do |t|
-    t.pattern = 'test_project/mocha/**/*_test.rb'
-  end
-  
-  Rake::TestTask.new('expectations') do |t|
     t.pattern = 'test_project/mocha/**/*_test.rb'
   end
 end
