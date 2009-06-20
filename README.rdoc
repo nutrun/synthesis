@@ -1,10 +1,6 @@
 = Synthesis
 
-== Philosophy
-
-Currently we believe that developers are writing unnecessary <em>dependency wired</em> tests to cover uncertainty about the validity of simulated interactions in their <em>dependency neutral</em> tests.  In other words, we cannot be certain that all our simulated interaction based tests 'join up'.  If it were possible to correlate the simulated interactions in our tests, then we should be able to do away with the need to write large numbers of complex, slow and brittle wired tests (apart from those which interact with the boundaries of the SUT).
-
-Synthesis combines lightweight tests to build confidence that the system under test is complete and reduces the need for large, overarching tests.
+== A tool for verifying mock object assumptions in tests
 
 == Installation
 
@@ -22,11 +18,9 @@ When used with the Mocha adapter, it will depend on the Mocha[http://mocha.rubyf
 
 When used with the RSpec adapter, it will depend on the RSpec[http://rspec.info/] library.
 
-When used with the Expectations adapter, it will depend on the Expectations[http://expectations.rubyforge.org] library.
-
 == Usage
 
-Synthesis can be used through its Rake task. It currently has three supported adapters: Mocha (with Test::Unit), RSpec and Expectations. If +adapter+ is not explicitly specified, the Mocha adapter will be used by default. 
+Synthesis can be used through its Rake task. It has two adapters: Mocha (with Test::Unit, etc) and RSpec. If +adapter+ is not specified, the Mocha adapter will be used by default. 
 
 By default, Synthesis outputs to +STDOUT+, but output can be redirected to alternative IO streams.
 
@@ -56,12 +50,11 @@ To use with RSpec, running all specs in the <tt>spec</tt> directory:
     t.pattern = 'spec/**/*_spec.rb'
   end
 
-To use with Expectations, redirecting output to a file:
+To to a file:
 
   require "synthesis/task"
 	
   Synthesis::Task.new do |t|
-    t.adapter = :expectations
     t.out = File.new "synthesis.test.txt", "a"
   end
   
@@ -95,7 +88,7 @@ To use Synthesis with Rails:
   require "synthesis/util/mock_instance"
   foo_mock = Foo.mock_instance(arg_one, arg_2)
 
-This is equivalent, but without calling the real <tt>initialize</tt>, to:
+This is equivalent, but without calling the real <tt>initialize</tt> method, to:
 
   foo_mock = Foo.new
   Foo.expects(:new).with(arg_one, arg_two).returns(foo_mock)
@@ -111,10 +104,6 @@ Either <tt>"mocha_standalone"</tt> or <tt>"spec/mocks"</tt> need to be required 
 
 Public clone URL: git://github.com/gmalamid/synthesis.git
 
-== Known Issues
-
-Reporting the location (filename and line number) of tested/untested expectations doesn't work as intended with the Expectations adapter.
-
 == Contributors
 
 Danilo Sato, Paul Nasrat, Jerome Riga
@@ -123,10 +112,7 @@ Danilo Sato, Paul Nasrat, Jerome Riga
 
 http://groups.google.com/group/synthesized-testing
 
+
 == Related reading
 
-* Synthesized Testing: A Primer ( http://nutrun.com/weblog/synthesized-testing-a-primer )
-* Confidence as a test code metric ( http://nutrun.com/weblog/confidence-as-a-test-code-metric )
-* Using Synthesis With Test::Unit and Mocha ( http://nutrun.com/weblog/using-synthesis-with-testunit-and-mocha )
-* Using Synthesis With Expectations ( http://nutrun.com/weblog/using-synthesis-with-expectations )
-* Synthesis validates simulated method calls taking method signature arguments into account ( http://nutrun.com/weblog/synthesis-002 )
+http://nutrun.com/weblog/using-synthesis-with-testunit-and-mocha

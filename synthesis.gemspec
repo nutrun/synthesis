@@ -1,9 +1,9 @@
 GEMSPEC =Gem::Specification.new do |s|
   s.name = 'synthesis'
-  s.version = '0.2.6'
+  s.version = '0.2.7'
   s.platform = Gem::Platform::RUBY
   s.rubyforge_project = "synthesis"
-  s.summary, s.description = 'A tool for Synthesized Testing'
+  s.summary, s.description = 'A tool for verifying mock object assumptions'
   s.authors = 'Stuart Caborn, George Malamidis, Danilo Sato'
   s.email = 'george@nutrun.com'
   s.homepage = 'http://synthesis.rubyforge.org'
@@ -15,7 +15,6 @@ GEMSPEC =Gem::Specification.new do |s|
     "Rakefile",
     "README.rdoc",
     "synthesis.gemspec",
-    "lib/synthesis/adapter/expectations.rb",
     "lib/synthesis/adapter/mocha.rb",
     "lib/synthesis/adapter/rspec.rb",
     "lib/synthesis/adapter.rb",
