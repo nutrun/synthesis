@@ -54,6 +54,24 @@ module Synthesis
       ExpectationRecord.add_expectation(Enumerable, :foo, :track)
       assert(ExpectationRecord.expectations.empty?)
     end
+
+    def test_does_not_add_expectation_for_ignored_class_as_string
+      ExpectationRecord.ignore('Hash')
+      ExpectationRecord.add_expectation(Hash, :foo, :track)
+      assert(ExpectationRecord.expectations.empty?)
+    end
+    
+    def test_does_not_add_expectation_for_ignored_object_as_string
+      ExpectationRecord.ignore('Hash')
+      ExpectationRecord.add_expectation(Hash.new, :foo, :track)
+      assert(ExpectationRecord.expectations.empty?)
+    end
+    
+    def test_does_not_add_expectation_for_ignored_module_as_string
+      ExpectationRecord.ignore('Enumerable')
+      ExpectationRecord.add_expectation(Enumerable, :foo, :track)
+      assert(ExpectationRecord.expectations.empty?)
+    end
     
     def test_returns_added_expectation_on_add
       expected = Expectation.new(Hash, :foo, :track, [], [:return_val])
