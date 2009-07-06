@@ -1,6 +1,6 @@
 GEMSPEC =Gem::Specification.new do |s|
   s.name = 'synthesis'
-  s.version = '0.2.7'
+  s.version = '0.2.8'
   s.platform = Gem::Platform::RUBY
   s.rubyforge_project = "synthesis"
   s.summary, s.description = 'A tool for verifying mock object assumptions'
